@@ -1,6 +1,4 @@
-#include <iostream>
-#include <iomanip>
-using namespace std;
+#include "include/functions.hpp"
 
 void printTitle() {
     cout << "         _____ _____            _   _  ____  _                _____\n";
