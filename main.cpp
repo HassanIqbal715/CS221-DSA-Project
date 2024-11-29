@@ -1,9 +1,8 @@
 #include <iostream>
+#include "functions.cpp"
 using namespace std;
 
 int main() {
-    cout << "Hello World\n";
-    cout << "this is faiq abdullah \n";
-    cout << "Affirmative bro\n";
+    printTitle();
     return 0;
 }
