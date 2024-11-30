@@ -1,13 +1,20 @@
 #include <iostream>
 #include "include/functions.hpp"
-#include "include/menu.hpp"
+#include "include/game.hpp"
 #include "include/globalVariables.hpp"
+#include "include/inventory.hpp"
+#include "include/item.hpp"
+#include "include/LinkedList.hpp"
+#include "include/menu.hpp"
+#include "include/shop.hpp"
+
 using namespace std;
 
 int main() {
     initGlobalVar();
     printTitle();
-    int option;
+    int option{-1};
+
     while (gameRunner) {
         Menu::instance()->printMainMenu();
         cin >> option;
@@ -27,6 +34,7 @@ int main() {
                 continue;
         }
     }
+    
     Menu::release();
     return 0;
 }
