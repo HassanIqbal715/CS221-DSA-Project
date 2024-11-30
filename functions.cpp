@@ -1,4 +1,4 @@
-#include "include/functions.hpp"
+#include "include/Functions.hpp"
 
 void printTitle() {
     cout << "         _____ _____            _   _  ____  _                _____\n";
