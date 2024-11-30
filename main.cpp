@@ -1,12 +1,12 @@
 #include <iostream>
-#include "include/functions.hpp"
-#include "include/game.hpp"
-#include "include/globalVariables.hpp"
-#include "include/inventory.hpp"
-#include "include/item.hpp"
+#include "include/Functions.hpp"
+#include "include/Game.hpp"
+#include "include/GlobalVariables.hpp"
+#include "include/Inventory.hpp"
+#include "include/Item.hpp"
 #include "include/LinkedList.hpp"
-#include "include/menu.hpp"
-#include "include/shop.hpp"
+#include "include/Menu.hpp"
+#include "include/Shop.hpp"
 
 using namespace std;
 

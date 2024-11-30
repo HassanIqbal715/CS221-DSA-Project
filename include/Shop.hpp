@@ -1,5 +1,5 @@
 #pragma once
-#include "item.hpp"
+#include "Item.hpp"
 #include "LinkedList.hpp"
 
 class Shop {

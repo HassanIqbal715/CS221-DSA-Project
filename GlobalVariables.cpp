@@ -1,4 +1,4 @@
-#include "include/globalVariables.hpp"
+#include "include/GlobalVariables.hpp"
 bool gameRunner;
 
 // initializes global variables

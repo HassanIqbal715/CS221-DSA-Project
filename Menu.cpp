@@ -1,4 +1,4 @@
-#include "include/menu.hpp"
+#include "include/Menu.hpp"
 
 Menu* Menu::sInstance = nullptr;
 
