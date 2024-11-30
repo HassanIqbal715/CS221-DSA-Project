@@ -1,0 +1,1 @@
+cd "/home/faiq/Repos/CS221-DSA-Project/" && g++ main.cpp Functions.cpp GlobalVariables.cpp Inventory.cpp Item.cpp Menu.cpp Shop.cpp -o bin/mainLinux  && "/home/faiq/Repos/CS221-DSA-Project/bin/"mainLinux
