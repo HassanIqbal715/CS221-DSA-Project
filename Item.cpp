@@ -1,13 +1,18 @@
 #include "include/Item.hpp"
 
 // Item class
+
+int Item::itemCount = 0;
+
 Item::Item() {
     name = " ";
     price = -1;
-    ID = 0;
+    ID = ++itemCount;
 }
 
-Item::Item(string name, int price, int ID) : name(name), price(price), ID(ID) {}
+Item::Item(string name, int price) : name(name), price(price) {
+    ID = ++itemCount;
+}
 
 void Item::setName(string name) {
     this->name = name;
@@ -15,10 +20,6 @@ void Item::setName(string name) {
 
 void Item::setPrice(int price) {
     this->price = price;
-}
-
-void Item::setID(int ID) {
-    this->ID = ID;
 }
 
 string Item::getName() {
@@ -39,8 +40,8 @@ Armor::Armor() {
     defense = -1;
 }
 
-Armor::Armor(string name, int price, int ID, Type type, int defense) :
-        Item(name, price, ID), type(type), defense(defense) {}
+Armor::Armor(string name, int price, Type type, int defense) :
+        Item(name, price), type(type), defense(defense) {}
 
 void Armor::setType(Type type) {
     this->type = type;
@@ -63,8 +64,8 @@ Food::Food() {
     int health = -1;
 }
 
-Food::Food(string name, int price, int ID, int health) :
-        Item(name, price, ID), health(health) {}
+Food::Food(string name, int price, int health) :
+        Item(name, price), health(health) {}
 
 void Food::setHealth(int health) {
     this->health = health;
@@ -81,8 +82,8 @@ Weapon::Weapon() {
     speed = -1;
 }
 
-Weapon::Weapon(string name, int price, int ID, Type type, int attack, int speed) : 
-        Item(name, price, ID), type(type), attack(attack), speed(speed) {}
+Weapon::Weapon(string name, int price, Type type, int attack, int speed) : 
+        Item(name, price), type(type), attack(attack), speed(speed) {}
 
 void Weapon::setType(Type type) {
     this->type = type;

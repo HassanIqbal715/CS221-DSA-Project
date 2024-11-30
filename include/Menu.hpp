@@ -17,6 +17,5 @@ private:
 public:
     static Menu* instance();
     static void release();
-    void printMainMenu();
-    void printShop();
+    void print();
 };

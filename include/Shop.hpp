@@ -5,7 +5,7 @@
 class Shop {
 private:
     static Shop* sInstance;
-    LinkedList<Item> items;
+    LinkedList<Item*> items;
 
 private:
     Shop();
@@ -13,9 +13,15 @@ private:
 
 public:
     static Shop* instance();
-    void addItem();
-    void removeItem();
+
+    void addArmor(string name, int price, Armor::Type type, int defense);
+    void addFood(string name, int price, int health);
+    void addWeapon(string name, int price, Weapon::Type type, int attack, int speed);
+    void removeItemByIndex(int index);
     Item* getItemByIndex(int index);
     Item* getItemByName(string name);
+    void print();
+    
+    void releaseElements();
     static void release();
 };

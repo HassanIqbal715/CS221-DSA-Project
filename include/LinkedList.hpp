@@ -221,6 +221,10 @@ public:
         return iterator;
     }
 
+    void resetIterator() {
+        iterator = head;
+    }
+
     Node* begin() {
         if (isEmpty())
             return nullptr;

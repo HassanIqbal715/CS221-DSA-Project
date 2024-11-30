@@ -7,13 +7,13 @@ protected:
     string name;
     int price;
     int ID;
+    static int itemCount;
 
 public:
     Item();
-    Item(string name, int price, int ID);
+    Item(string name, int price);
     void setName(string name);
     void setPrice(int price);
-    void setID(int ID);
     string getName();
     int getPrice();
     int getID();
@@ -29,7 +29,7 @@ private:
 
 public:
     Armor();
-    Armor(string name, int price, int ID, Type type, int defense);
+    Armor(string name, int price, Type type, int defense);
     void setType(Type type);
     void setDefense(int defense);
     Type getType();
@@ -42,7 +42,7 @@ private:
 
 public:
     Food();
-    Food(string name, int price, int ID, int health);
+    Food(string name, int price, int health);
     void setHealth(int health);
     int getHealth();
 };
@@ -58,7 +58,7 @@ private:
 
 public:
     Weapon();
-    Weapon(string name, int price, int ID, Type type, int attack, int speed);
+    Weapon(string name, int price, Type type, int attack, int speed);
     void setType(Type type);
     void setAttack(int attack);
     void setSpeed(int speed);

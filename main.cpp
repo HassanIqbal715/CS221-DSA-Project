@@ -7,7 +7,6 @@
 #include "include/LinkedList.hpp"
 #include "include/Menu.hpp"
 #include "include/Shop.hpp"
-
 using namespace std;
 
 int main() {
@@ -16,13 +15,14 @@ int main() {
     int option{-1};
 
     while (gameRunner) {
-        Menu::instance()->printMainMenu();
+        Menu::instance()->print();
         cin >> option;
+        system("cls");
         switch (option) {
             case 1:
                 break;
             case 2:
-                Menu::instance()->printShop();
+                Shop::instance()->print();
                 break;
             case 3:
                 break;
@@ -34,7 +34,7 @@ int main() {
                 continue;
         }
     }
-    
     Menu::release();
+    Shop::release();
     return 0;
 }
