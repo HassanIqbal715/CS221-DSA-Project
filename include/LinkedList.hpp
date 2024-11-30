@@ -9,7 +9,7 @@ private:
     };
 
     bool isEmpty() {
-
+        return head == nullptr;
     }
 
 private:
@@ -18,8 +18,27 @@ private:
 
 public:
     LinkedList() {
-        head = nullptr;
-        tail = nullptr;
+        head {nullptr};
+        tail {nullptr};
     }
 
+    void push_front(T val) {
+        Node* newNode {new Node(val)};
+
+        if (isEmpty()) {
+            tail = newNode;
+        }
+        else {
+            head->prev = newNode;
+        }
+
+        newNode->next = head;
+        tail->next = newNode;
+        newNode->prev = tail;
+        head = newNode;
+    }
+
+    void push_back() {
+        
+    }
 };
