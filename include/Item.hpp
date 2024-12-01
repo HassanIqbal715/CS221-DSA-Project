@@ -11,6 +11,7 @@ protected:
 
 public:
     Item();
+    Item(Item &item);
     Item(string name, int price);
     void setName(string name);
     void setPrice(int price);
@@ -29,6 +30,7 @@ private:
 
 public:
     Armor();
+    Armor(Armor& armor);
     Armor(string name, int price, Type type, int defense);
     void setType(Type type);
     void setDefense(int defense);
@@ -39,9 +41,10 @@ public:
 class Food : public Item {
 private:
     int health;
-
+    
 public:
     Food();
+    Food(Food& food);
     Food(string name, int price, int health);
     void setHealth(int health);
     int getHealth();
@@ -49,7 +52,7 @@ public:
 
 class Weapon : public Item {
 public:
-    enum Type {SWORD, AXE, POLEARM, STAFF, BOW};
+    enum Type {SWORD, AXE, POLEARM, STAFF, BOW, NONE};
 
 private:
     Type type;
@@ -58,6 +61,7 @@ private:
 
 public:
     Weapon();
+    Weapon(Weapon& weapon);
     Weapon(string name, int price, Type type, int attack, int speed);
     void setType(Type type);
     void setAttack(int attack);

@@ -10,6 +10,11 @@ Item::Item() {
     ID = ++itemCount;
 }
 
+Item::Item(Item& item) {
+    name = item.name;
+    price = item.price;
+}
+
 Item::Item(string name, int price) : name(name), price(price) {
     ID = ++itemCount;
 }
@@ -40,6 +45,11 @@ Armor::Armor() {
     defense = -1;
 }
 
+Armor::Armor(Armor& armor) : Item(armor) {
+    defense = armor.defense;
+    type = armor.type;
+}
+
 Armor::Armor(string name, int price, Type type, int defense) :
         Item(name, price), type(type), defense(defense) {}
 
@@ -64,6 +74,10 @@ Food::Food() {
     int health = -1;
 }
 
+Food::Food(Food& food) {
+    health = food.health;
+}
+
 Food::Food(string name, int price, int health) :
         Item(name, price), health(health) {}
 
@@ -80,6 +94,12 @@ Weapon::Weapon() {
     type = SWORD;
     attack = -1;
     speed = -1;
+}
+
+Weapon::Weapon(Weapon& weapon) {
+    type = weapon.type;
+    attack = weapon.attack;
+    speed = weapon.speed;
 }
 
 Weapon::Weapon(string name, int price, Type type, int attack, int speed) : 
