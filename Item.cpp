@@ -19,6 +19,10 @@ Item::Item(string name, int price) : name(name), price(price) {
     ID = ++itemCount;
 }
 
+Item::~Item() {
+    delete this;
+}
+
 void Item::setName(string name) {
     this->name = name;
 }

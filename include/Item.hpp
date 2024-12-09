@@ -13,6 +13,7 @@ public:
     Item();
     Item(Item &item);
     Item(string name, int price);
+    virtual ~Item();
     void setName(string name);
     void setPrice(int price);
     string getName();

@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include "Item.hpp"
 using namespace std;
@@ -8,6 +9,7 @@ private:
     int level;
     int exp;
     int health;
+    int maxHealth;
     int attack;
     int defense;
     int speed;
@@ -20,13 +22,13 @@ public:
     Character(string name, int health, int attack, int defense, int speed);
 
     void setName(string name);
-    void setExp();
+    void setExp(int exp);
     void setHealth(int health);
     void setAttack(int attack);
     void setDefense(int defense);
     void setSpeed(int speed);
-    void setWeapon(Weapon weapon);
-    void setArmor(Armor armor);
+    void setWeapon(Weapon &weapon);
+    void setArmor(Armor &armor);
     string getName();
     int getLevel();
     int getExp();
@@ -36,6 +38,8 @@ public:
     int getSpeed();
     Weapon* getWeapon();
     Armor** getArmor();
+
+    void eatFood(Food &food);
 
     ~Character();
 };

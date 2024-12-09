@@ -1,9 +1,22 @@
 #include <iostream>
+#include "GlobalVariables.hpp"
+
 using namespace std;
 
-class game {
+class Game {
 private:
-    
-public:
+    static Game* sInstance;
 
+private:
+    Game();
+    ~Game();
+
+public:
+    static Game* instance();
+
+    void fight();
+    void play();
+    void printMenu();
+
+    static void release();
 };

@@ -5,6 +5,7 @@ Character::Character() {
     exp = 0;
     level = 1;
     health = 150;
+    maxHealth = 150;
     attack = 10;
     defense = 15;
     speed = 20;
@@ -20,6 +21,7 @@ Character::Character() {
 Character::Character(string name, int health, int attack, int defense, int speed) {
     this->name = name;
     this->health = health;
+    this->maxHealth = health;
     this->attack = attack;
     this->defense = defense;
     this->speed = speed;
@@ -38,7 +40,7 @@ void Character::setName(string name) {
     this->name = name;
 }
 
-void Character::setExp() {
+void Character::setExp(int exp) {
     this->exp = exp;
 }
 
@@ -58,26 +60,41 @@ void Character::setSpeed(int speed) {
     this->speed = speed;
 }
 
-void Character::setWeapon(Weapon weapon) {
+void Character::setWeapon(Weapon &weapon) {
+    if (this->weapon != nullptr)
+        attack -= this->weapon->getAttack();
     this->weapon = &weapon;
+    attack += this->weapon->getAttack();
 }
 
-void Character::setArmor(Armor armor) {
+void Character::setArmor(Armor &armor) {
     switch (armor.getType()) {
         case Armor::Type::HELMET:
+            if (armorSet[0] != nullptr)
+                defense -= armorSet[0]->getDefense();
             armorSet[0] = &armor;
+            defense += armorSet[0]->getDefense();
             break;
         
         case Armor::Type::CHESTPLATE:
+            if (armorSet[1] != nullptr)
+                defense -= armorSet[1]->getDefense();
             armorSet[1] = &armor;
+            defense += armorSet[1]->getDefense();
             break;
 
         case Armor::Type::LEGGINGS:
+            if (armorSet[2] != nullptr)
+                defense -= armorSet[2]->getDefense();
             armorSet[2] = &armor;
+            defense += armorSet[2]->getDefense();
             break;
 
         case Armor::Type::BOOTS:
+            if (armorSet[3] != nullptr)
+                defense -= armorSet[3]->getDefense();
             armorSet[3] = &armor;
+            defense += armorSet[3]->getDefense();
             break;
         
         default:
@@ -119,6 +136,15 @@ Weapon* Character::getWeapon() {
 
 Armor** Character::getArmor() {
     return armorSet;
+}
+
+void Character::eatFood(Food &food) {
+    if (health + food.getHealth() >= maxHealth) {
+        health = maxHealth;
+    }
+    else {
+        health += food.getHealth();
+    }
 }
 
 Character::~Character() {
