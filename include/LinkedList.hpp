@@ -23,6 +23,7 @@ public:
     LinkedList() {
         head = nullptr;
         tail = nullptr;
+        iterator = nullptr;
         size = 0;
     }
     
