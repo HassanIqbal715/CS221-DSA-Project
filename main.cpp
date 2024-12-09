@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdlib.h>
 #include <iomanip>
 #include "include/Functions.hpp"
 #include "include/Game.hpp"
@@ -18,7 +19,8 @@ int main() {
     while (gameRunner) {
         Menu::instance()->print();
         cin >> option;
-        system("cls");
+        // system("cls"); Commented out due to not working on linux
+        // can use clear on linux machine but in turn will not work on windows
         switch (option) {
             case 1:
                 break;
