@@ -10,6 +10,12 @@ private:
     static Inventory* sInstance;
     LinkedList<Item*> items;
 
+    LinkedList<Item*>::Node* split(LinkedList<Item*>::Node* /*head*/);
+
+    LinkedList<Item*>::Node* mergeSort(LinkedList<Item*>::Node* /*head*/);
+
+    LinkedList<Item*>::Node* merge(LinkedList<Item*>::Node* /*list1*/, 
+        LinkedList<Item*>::Node* /*list2*/);
 private:
     Inventory();
     ~Inventory();
