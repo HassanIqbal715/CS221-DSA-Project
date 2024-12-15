@@ -33,6 +33,7 @@ public:
     int getLevel();
     int getExp();
     int getHealth();
+    int getMaxHealth();
     int getAttack();
     int getDefense();
     int getSpeed();

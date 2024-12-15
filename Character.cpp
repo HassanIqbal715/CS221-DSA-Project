@@ -118,6 +118,10 @@ int Character::getHealth() {
     return health;
 }
 
+int Character::getMaxHealth() {
+    return maxHealth;
+}
+
 int Character::getAttack() {
     return attack;
 }

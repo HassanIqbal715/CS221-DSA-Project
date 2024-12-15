@@ -76,6 +76,13 @@ void Shop::print() {
     items.resetIterator();  // Reset to head after iteration
 }
 
+void Shop::printOptions() {
+    cout << "1. Purchase Item by Index\n";
+    cout << "2. Purchase Item by Name\n";
+    cout << "3. Check Balance\n";
+    cout << "4. Check current equipment\n";
+    cout << "0. Exit\n";
+}
 
 void Shop::releaseElements() {
     items.release();

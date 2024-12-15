@@ -1,4 +1,6 @@
 #include <iostream>
+#include "Inventory.hpp"
+#include "Shop.hpp"
 #include "GlobalVariables.hpp"
 
 using namespace std;
@@ -17,6 +19,7 @@ public:
     void fight();
     void play();
     void printMenu();
+    void input(Character *&character);
 
     static void release();
 };

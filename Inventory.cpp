@@ -29,33 +29,47 @@ void Inventory::release() {
 
 void Inventory::insertItem(Item *item) {
     items.push_back(item);
+    cout << "Inserting item: " << item->getName() << endl;
 }
 
 void Inventory::removeItem(Item* item) {
     if (item == nullptr) {
-        cout << "Cannot remove a null item.\n";
+        cout << "Cannot remove an item that doesn't exist.\n";
         return;
     }
 
-    // Start the iterator
     items.startIterator();
 
     for (int i = 0; i < items.getSize(); ++i) {
-        if (items.getIterator()->data == item) { // Found the item
-            cout << "Removing item: " << item->getName() << endl;
+        if (items.getIterator()->data == item) {
             items.deleteNodeByIndex(i);
-            items.resetIterator(); // Reset the iterator after modifying the list
+            items.resetIterator();
             return;
         }
         items.iterateOnce();
     }
 
-    items.resetIterator(); // Reset the iterator even if not found
+    items.resetIterator();
     cout << "Item not found in inventory.\n";
 }
 
 Item* Inventory::searchItemByIndex(int index) {
     return items.searchNodeByIndex(index)->data;
+}
+
+Item* Inventory::searchItemByName(string name) {
+    LinkedList<Item*>::Node* temp = items.head;
+
+    fixStringCase(name);
+
+    for (int i = 0; i < items.size; i++) {
+        if (temp->data->getName() == name) {
+            return temp->data;
+        }
+        temp = temp->next;
+    }
+
+    return nullptr;
 }
 
 // LinkedList<Item*>::Node* Inventory::split(LinkedList<Item*>::Node* head){
@@ -284,39 +298,91 @@ void Inventory::printItems() {
 }
 
 void Inventory::printOptions() {
-    cout << "------------------------------\n";
     cout << "1. Search by Index\n";
-    cout << "2. Search by ID\n";
-    cout << "3. Search by Name\n";
+    cout << "2. Search by Name\n";
+    cout << "3. Sort by Name\n";
     cout << "0. Exit\n";
 }
 
 void Inventory::printSubOptions() {
     cout << "1. Use Item\n";
-    cout << "2. Item Description\n";
-    cout << "3. Discard Item\n";
+    cout << "2. Compare with your equipment\n";
+    cout << "3. Item Description\n";
+    cout << "4. Discard Item\n";
     cout << "0. Exit\n";
 }
 
-void Inventory::input(Character* character) {
+int Inventory::input(Character* character) {
     static int option = 0;
     cin >> option;
+
     switch (option) {
-        case 1:
+        case 1: {
             int index;
+
             cout << "Enter index: ";
             cin >> index;
-            auto* temp = items.searchNodeByIndex(index);
 
-            if (temp == nullptr || temp->data == nullptr) {
+            auto* temp = searchItemByIndex(index);
+
+            cout << "\n";
+
+            if (temp == nullptr) {
                 cout << "Item not found.\n";
-                return;
+                break;
             }
 
+            cout << "Item found.\n";
+            cout << "\n------------------------------\n";
+
             printSubOptions();
-            inputSubOptions(character, temp->data);
+
+            cout << "Enter your option: ";
+            inputSubOptions(character, temp);
+
             break;
+        }
+
+        case 2: {
+            string name;
+
+            cout << "Enter name: ";
+            cin.ignore();
+            getline(cin, name);
+
+            auto* temp = searchItemByName(name);
+
+            if (temp == nullptr) {
+                cout << "Item not found.\n";
+                break;
+            }
+
+            cout << "Item found.\n";
+            cout << "\n------------------------------\n";
+            printSubOptions();
+
+            cout << "Enter your option: ";
+            inputSubOptions(character, temp);
+
+            break;
+        }
+        
+        case 3: {
+            sort();
+            break;
+        }
+
+        case 0: {
+            return 0;
+            break;
+        }
+
+        default: {
+            cout << "Invalid input.\n";
+            break;
+        }
     }
+    return 1;
 }
 
 void Inventory::inputSubOptions(Character* character, Item* item) {
@@ -337,24 +403,173 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                         insertItem(character->getArmor()[1]);
                     }
                 }
+                else if (armor->getType() == Armor::Type::LEGGINGS) {
+                    if (character->getArmor()[2] != nullptr) {
+                        insertItem(character->getArmor()[2]);
+                    }
+                }
+                else {
+                    if (character->getArmor()[3] != nullptr) {
+                        insertItem(character->getArmor()[3]);
+                    }
+                }
                 character->setArmor(*armor);
                 removeItem(item);
             }
+            else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
+                if (character->getWeapon() != nullptr) {
+                    insertItem(character->getWeapon());
+                }
+                character->setWeapon(*weapon);
+                removeItem(item);
+            }
+            else if (Food* food = dynamic_cast<Food*>(item)) {
+                if (character->getHealth() < character->getMaxHealth()) {
+                    character->eatFood(*food);
+                    removeItem(item);
+                }
+                else {
+                    cout << "Your health is already full.\n";
+                }
+            }
             break;
-
         case 2:
-            cout << "Item: " << item->getName() << ", Price: " << item->getPrice() << endl;
+            cout << "\n------------------------------\n";
+            if (Armor* armor = dynamic_cast<Armor*>(item)) {
+                bool isEquipped = false;
+                Armor* tempArmor = nullptr;
+                if (armor->getType() == Armor::Type::HELMET) {
+                    if (character->getArmor()[0] != nullptr) {
+                        isEquipped = true;
+                        tempArmor = character->getArmor()[0];
+                    }
+                }
+                else if (armor->getType() == Armor::Type::CHESTPLATE) {
+                    if (character->getArmor()[1] != nullptr) {
+                        isEquipped = true;
+                        tempArmor = character->getArmor()[1];
+                    }
+                }
+                else if (armor->getType() == Armor::Type::LEGGINGS) {
+                    if (character->getArmor()[2] != nullptr) {
+                        isEquipped = true;
+                        tempArmor = character->getArmor()[2];
+                    }
+                }
+                else {
+                    if (character->getArmor()[3] != nullptr) {
+                        isEquipped = true;
+                        tempArmor = character->getArmor()[3];
+                    }
+                }
+                if (isEquipped) {
+                    cout << "Character: " << "\t\t" << "Inventory Armor: \n";
+                    cout << "\n------------------------------\n";
+                    cout << tempArmor->getName() << "\tName\t" << armor->getName() << '\n';
+                    cout << tempArmor->getPrice() << "   \tPrice   \t" << armor->getPrice() << '\n';
+                    cout << tempArmor->getDefense() << "   \tDefense\t   " << armor->getDefense() << '\n';
+                }
+                else {
+                    cout << "You don't have any armor equipped.\n";
+                }
+            }
+            else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
+                cout << "Character: " << "\t  \t" << "Inventory Weapon: \n";
+                cout << "----------------------------------------\n";
+                if (character->getWeapon() != nullptr) {
+                    cout << character->getWeapon()->getName() << "\tName\t" << weapon->getName() << '\n';
+                    cout << character->getWeapon()->getPrice() << "\tPrice\t" << weapon->getPrice() << '\n';
+
+                    if (character->getWeapon()->getType() == Weapon::Type::AXE) {
+                        cout << "Axe" << "\tType\t";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::SWORD) {
+                        cout << "Sword" << "\tType\t";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::POLEARM) {
+                        cout << "Polearm" << "\tType\t";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::STAFF) {
+                        cout << "Staff" << "\tType\t";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::BOW) {
+                        cout << "Bow" << "\tType\t";
+                    }
+
+                    if (character->getWeapon()->getType() == Weapon::Type::AXE) {
+                        cout << "Axe\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::SWORD) {
+                        cout << "Sword\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::POLEARM) {
+                        cout << "Polearm\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::STAFF) {
+                        cout << "Staff\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::BOW) {
+                        cout << "Bow\n";
+                    }
+                    cout << character->getWeapon()->getAttack() << "\tAttack\t" << weapon->getAttack() << '\n';
+                    cout << character->getWeapon()->getSpeed() << "\tSpeed\t" << weapon->getSpeed() << '\n';
+                }
+                else {
+                    cout << "Punch" << "\tName\t" << weapon->getName() << '\n';
+                    cout << 0 << "\tPrice\t" << weapon->getPrice() << '\n';
+                    cout << "None" << "\tType\t";
+
+                    if (character->getWeapon()->getType() == Weapon::Type::AXE) {
+                        cout << "Axe\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::SWORD) {
+                        cout << "Sword\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::POLEARM) {
+                        cout << "Polearm\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::STAFF) {
+                        cout << "Staff\n";
+                    }
+                    else if (character->getWeapon()->getType() == Weapon::Type::BOW) {
+                        cout << "Bow\n";
+                    }
+
+                    cout << character->getAttack() << "\tAttack\t" << weapon->getAttack() << '\n'; 
+                    cout << character->getSpeed() << "\tSpeed\t" << weapon->getSpeed() << '\n';
+                }
+            }
+            else {
+                cout << "Cannot compare food items.\n";
+            }
+            break;
+        
+        case 3:
+            cout << "Item: " << item->getName() << "\nPrice: " << item->getPrice() << endl;
+            if (Armor* armor = dynamic_cast<Armor*>(item)) {
+                cout << "Armor Type: " << armor->getType() << endl;
+                cout << "Defense: " << armor->getDefense() << endl;
+            }
+            else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
+                cout << "Weapon Type: " << weapon->getType() << endl;
+                cout << "Attack Power: " << weapon->getAttack() << endl;
+                cout << "Speed: " << weapon->getSpeed() << endl;
+            }
+            else if (Food* food = dynamic_cast<Food*>(item)) {
+                cout << "Healing: " << food->getHealth() << endl;
+            }
             break;
 
-        case 3:
-            cout << "Discarding item: " << item->getName() << endl;
+        case 4:
+            cout << "Removed Item: " << item->getName() << endl;
+            removeItem(item);
             break;
 
         case 0:
-            cout << "Exiting...\n";
-            return;
+            break;
 
         default:
             cout << "Invalid option.\n";
+            break;
     }
 }

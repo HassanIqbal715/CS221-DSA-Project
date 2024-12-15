@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
 #include "Item.hpp"
+#include "Functions.hpp"
 #include "LinkedList.hpp"
 #include "Character.hpp"
 using namespace std;
@@ -23,13 +25,19 @@ private:
 public:
     static Inventory* instance();
     static void release();
+
     void insertItem(Item *item);
     void removeItem(Item *item);
+
     Item* searchItemByIndex(int index);
-    void sort(); // Create this function Faiq!!
+    Item* searchItemByName(string name);
+
+    void sort();
+
     void printItems();
     void printOptions();
     void printSubOptions();
-    void input(Character* character);
+
+    int input(Character* character);
     void inputSubOptions(Character* character, Item* item);
 };

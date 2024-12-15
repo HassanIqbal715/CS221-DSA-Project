@@ -14,3 +14,26 @@ void printTitle() {
     cout << " /_/    \\_\\_____/   \\/   |______|_| \\_|  |_|   \\____/|_|  \\_\\______|_____/\n"; 
     cout << '\n';                                                                           
 }
+
+void printUserBalance() {
+    cout << "Balance: " << userBalance << " Rs\n";
+}
+
+void fixStringCase(string& text) {
+    if (text[0] >= 'a' && text[0] <= 'z') {
+        text[0] -= 32;
+    }
+
+    for (int i = 1; i < text.size(); i++) {
+        if (text[i - 1] != ' ') { 
+            if (text[i] >= 'A' && text[i] <= 'Z') {
+                text[i] += 32;
+            }
+        }
+        else {
+            if (text[i] >= 'a' && text[i] >= 'z') {
+                text[i] -= 32;
+            }
+        }
+    }
+}
