@@ -8,11 +8,15 @@ private:
     string name;
     int level;
     int exp;
+    int targetExp;
     int health;
     int maxHealth;
     int attack;
+    int baseAttack;
     int defense;
+    int baseDefense;
     int speed;
+    int baseSpeed;
     Weapon* weapon;
     Armor** armorSet;
     // add skills here
@@ -40,7 +44,9 @@ public:
     Weapon* getWeapon();
     Armor** getArmor();
 
-    void eatFood(Food &food);
+    bool checkLevelUp();
+    void levelUp();
+    void consumeItem(Food &food);
 
     ~Character();
 };

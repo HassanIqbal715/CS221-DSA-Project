@@ -3,12 +3,16 @@
 Character::Character() {
     name = " ";
     exp = 0;
+    targetExp = 200;
     level = 1;
     health = 150;
     maxHealth = 150;
     attack = 10;
+    baseAttack = 10;
     defense = 15;
+    baseAttack = 15;
     speed = 20;
+    baseSpeed = 20;
 
     weapon = nullptr;
     armorSet = new Armor*[4];
@@ -23,9 +27,13 @@ Character::Character(string name, int health, int attack, int defense, int speed
     this->health = health;
     this->maxHealth = health;
     this->attack = attack;
+    this->baseAttack = attack;
     this->defense = defense;
+    this->baseDefense = defense;
     this->speed = speed;
+    this->baseSpeed = speed;
     exp = 0;
+    targetExp = 200;
     level = 1;
 
     weapon = nullptr;
@@ -61,10 +69,8 @@ void Character::setSpeed(int speed) {
 }
 
 void Character::setWeapon(Weapon &weapon) {
-    if (this->weapon != nullptr)
-        attack -= this->weapon->getAttack();
     this->weapon = &weapon;
-    attack += this->weapon->getAttack();
+    attack = baseAttack + this->weapon->getAttack();
 }
 
 void Character::setArmor(Armor &armor) {
@@ -142,7 +148,31 @@ Armor** Character::getArmor() {
     return armorSet;
 }
 
-void Character::eatFood(Food &food) {
+bool Character::checkLevelUp() {
+    return (exp >= targetExp);
+}
+
+void Character::levelUp() {
+    float levelUpFactor = 1.2;
+    ++level;
+    exp -= targetExp;
+    attack -= baseAttack;
+    defense -= baseDefense;
+    speed -= baseSpeed;
+
+    maxHealth *= levelUpFactor;
+    baseAttack *= levelUpFactor;
+    baseDefense *= levelUpFactor;
+    baseSpeed *= levelUpFactor;
+
+    health = maxHealth;
+    attack += baseAttack;
+    defense += baseDefense;
+    speed += baseDefense;
+    cout << maxHealth << " " << baseAttack;
+}
+
+void Character::consumeItem(Food &food) {
     if (health + food.getHealth() >= maxHealth) {
         health = maxHealth;
     }

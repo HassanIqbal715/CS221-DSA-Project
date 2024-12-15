@@ -27,6 +27,7 @@ int main() {
         cout << "\n---------------------------\n";
         Menu::instance()->print();
         cout << "Enter your option: ";
+        granola->levelUp();
         cin >> option;
         // system("cls"); Commented out due to not working on linux
         // can use clear on linux machine but in turn will not work on windows

@@ -425,7 +425,7 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
             }
             else if (Food* food = dynamic_cast<Food*>(item)) {
                 if (character->getHealth() < character->getMaxHealth()) {
-                    character->eatFood(*food);
+                    character->consumeItem(*food);
                     removeItem(item);
                 }
                 else {
