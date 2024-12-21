@@ -32,9 +32,11 @@ Character::Character(string name, int health, int attack, int defense, int speed
     this->baseDefense = defense;
     this->speed = speed;
     this->baseSpeed = speed;
-    exp = 0;
-    targetExp = 200;
-    level = 1;
+    exp = 500;
+    targetExp =  500 ;
+    level = 4;
+
+    levelUp();
 
     weapon = nullptr;
     armorSet = new Armor*[4];
@@ -120,6 +122,10 @@ int Character::getExp() {
     return exp;
 }
 
+int Character::getTargetExp() {
+    return targetExp;
+}
+
 int Character::getHealth() {
     return health;
 }
@@ -153,23 +159,78 @@ bool Character::checkLevelUp() {
 }
 
 void Character::levelUp() {
-    float levelUpFactor = 1.2;
     ++level;
     exp -= targetExp;
     attack -= baseAttack;
     defense -= baseDefense;
     speed -= baseSpeed;
 
-    maxHealth *= levelUpFactor;
-    baseAttack *= levelUpFactor;
-    baseDefense *= levelUpFactor;
-    baseSpeed *= levelUpFactor;
+    targetExp *= 1.5;
+    if (level <= 5) {
+        maxHealth += 100;
+        baseAttack += 10;
+        baseDefense += 5;
+        baseSpeed += 2;
+    }
+    else if (level <= 10) {
+        maxHealth += 150;
+        baseAttack += 20;
+        baseDefense += 10;
+        baseSpeed += 4;
+    }
+    else if (level <= 15) {
+        maxHealth += 200;
+        baseAttack += 30;
+        baseDefense += 15;
+        baseSpeed += 6;
+    }
+    else if (level <= 20) {
+        maxHealth += 250;
+        baseAttack += 40;
+        baseDefense += 20;
+        baseSpeed += 8;
+    }
+    else if (level <= 25) {
+        maxHealth += 300;
+        baseAttack += 50;
+        baseDefense += 25;
+        baseSpeed += 10;
+    }
+    else if (level <= 30) {
+        maxHealth += 350;
+        baseAttack += 60;
+        baseDefense += 30;
+        baseSpeed += 12;
+    }
+    else if (level <= 35) {
+        maxHealth += 400;
+        baseAttack += 70;
+        baseDefense += 35;
+        baseSpeed += 14;
+    }
+    else if (level <= 40) {
+        maxHealth += 450;
+        baseAttack += 80;
+        baseDefense += 40;
+        baseSpeed += 16;
+    }
+    else if (level <= 45) {
+        maxHealth += 500;
+        baseAttack += 90;
+        baseDefense += 45;
+        baseSpeed += 18;
+    }
+    else if (level <= 50) {
+        maxHealth += 550;
+        baseAttack += 100;
+        baseDefense += 50;
+        baseSpeed += 20;
+    }
 
     health = maxHealth;
-    attack += baseAttack;
-    defense += baseDefense;
-    speed += baseDefense;
-    cout << maxHealth << " " << baseAttack;
+    attack = baseAttack;
+    defense = baseDefense;
+    speed = baseSpeed;
 }
 
 void Character::consumeItem(Food &food) {

@@ -36,6 +36,7 @@ public:
     string getName();
     int getLevel();
     int getExp();
+    int getTargetExp();
     int getHealth();
     int getMaxHealth();
     int getAttack();
