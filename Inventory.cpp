@@ -3,11 +3,7 @@
 Inventory* Inventory::sInstance = nullptr;
 
 Inventory::Inventory() {
-    Armor* armor = new Armor("Chestplate", 100, Armor::Type::CHESTPLATE, 100);
-    Armor* armor1 = new Armor("Chestplate2", 100, Armor::Type::CHESTPLATE, 100);
     Food* apple = new Food("Apple", 50, 20);
-    insertItem(armor);
-    insertItem(armor1);
     insertItem(apple);
 }
 
@@ -28,8 +24,9 @@ void Inventory::release() {
 }
 
 void Inventory::insertItem(Item *item) {
-    items.push_back(item);
-    cout << "Inserting item: " << item->getName() << endl;
+    Item* newItem = new Item(*item);
+    items.push_back(newItem);
+    cout << "Inserting item: " << newItem->getName() << endl;
 }
 
 void Inventory::removeItem(Item* item) {
