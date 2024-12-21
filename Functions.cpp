@@ -19,6 +19,13 @@ void printUserBalance() {
     cout << "Balance: " << userBalance << " Rs\n";
 }
 
+void printHealthBar(int currentHealth, int maxHealth) {
+    float percentage = float(float(currentHealth) / maxHealth) * 100;
+    for (int i = 0; i < percentage; i += 5) {
+        cout << "|";
+    }
+}
+
 void fixStringCase(string& text) {
     if (text[0] >= 'a' && text[0] <= 'z') {
         text[0] -= 32;

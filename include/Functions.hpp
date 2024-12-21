@@ -5,4 +5,5 @@ using namespace std;
 
 void printTitle();
 void printUserBalance();
+void printHealthBar(int currentHealth, int maxHealth);
 void fixStringCase(string& text);
