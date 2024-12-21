@@ -1,0 +1,113 @@
+Armor IronHelmet 100 HELMET 20
+Armor IronChestplate 200 CHESTPLATE 50
+Armor IronLeggings 150 LEGGINGS 30
+Armor IronBoots 75 BOOTS 15
+Armor SteelHelmet 150 HELMET 40
+Armor SteelChestplate 300 CHESTPLATE 80
+Armor SteelLeggings 200 LEGGINGS 60
+Armor SteelBoots 100 BOOTS 25
+Armor LeatherHelmet 50 HELMET 10
+Armor LeatherChestplate 120 CHESTPLATE 35
+Armor LeatherLeggings 90 LEGGINGS 20
+Armor LeatherBoots 40 BOOTS 5
+Armor BronzeHelmet 70 HELMET 15
+Armor BronzeChestplate 150 CHESTPLATE 45
+Armor BronzeLeggings 110 LEGGINGS 25
+Armor BronzeBoots 55 BOOTS 10
+Armor GoldHelmet 250 HELMET 60
+Armor GoldChestplate 500 CHESTPLATE 120
+Armor GoldLeggings 350 LEGGINGS 100
+Armor GoldBoots 175 BOOTS 40
+Armor DiamondHelmet 500 HELMET 100
+Armor DiamondChestplate 1000 CHESTPLATE 250
+Armor DiamondLeggings 750 LEGGINGS 200
+Armor DiamondBoots 375 BOOTS 80
+Armor TitanArmor 1000 CHESTPLATE 150
+Armor KrakenArmor 900 CHESTPLATE 120
+Armor DragonScaleArmor 800 CHESTPLATE 100
+Armor HydraScaleArmor 950 CHESTPLATE 140
+Armor BehemothArmor 1100 CHESTPLATE 180
+Armor ChimeraSkin 600 CHESTPLATE 90
+Armor FireDragonScale 800 CHESTPLATE 110
+Armor SoulStoneArmor 1200 CHESTPLATE 200
+
+Weapon WoodenSword 150 SWORD 10 15
+Weapon SteelSword 250 SWORD 20 25
+Weapon BronzeSword 200 SWORD 15 20
+Weapon GoldSword 350 SWORD 25 30
+Weapon DiamondSword 500 SWORD 40 35
+Weapon WoodenAxe 120 AXE 15 20
+Weapon SteelAxe 220 AXE 25 30
+Weapon BronzeAxe 180 AXE 20 25
+Weapon GoldAxe 300 AXE 35 40
+Weapon DiamondAxe 450 AXE 50 45
+Weapon WoodenBow 100 BOW 8 12
+Weapon SteelBow 180 BOW 18 22
+Weapon BronzeBow 150 BOW 12 18
+Weapon GoldBow 250 BOW 28 30
+Weapon DiamondBow 400 BOW 40 35
+Weapon WoodenStaff 130 STAFF 15 20
+Weapon SteelStaff 230 STAFF 25 35
+Weapon BronzeStaff 190 STAFF 20 28
+Weapon GoldStaff 320 STAFF 40 45
+Weapon DiamondStaff 500 STAFF 55 50
+Weapon Crossbow 350 BOW 40 50
+Weapon Polearm 250 POLEARM 30 25
+Weapon DragonClaw 600 POLEARM 50 40
+Weapon ThunderStaff 450 STAFF 45 55
+Weapon MysticBow 400 BOW 35 40
+Weapon CrystalSword 550 SWORD 45 40
+Weapon GiantAxe 550 AXE 50 60
+Weapon DemonicStaff 650 STAFF 70 60
+Weapon ElvenBow 300 BOW 20 30
+Weapon OrcAxe 400 AXE 40 45
+Weapon RuneSword 600 SWORD 50 55
+Weapon IceStaff 300 STAFF 30 40
+Weapon FireBow 500 BOW 25 45
+Weapon LightSpear 350 POLEARM 30 50
+Weapon TitanFist 800 NONE 100 120
+Weapon KrakenTentacle 700 SWORD 90 100
+Weapon DragonScaleSword 600 SWORD 75 85
+Weapon HydraClaw 750 POLEARM 120 130
+Weapon BehemothFist 900 NONE 110 130
+Weapon ChimeraHorn 500 STAFF 60 80
+Weapon FireClaw 700 AXE 100 120
+Weapon SoulStoneStaff 1000 STAFF 150 200
+Weapon ChimericAxe 850 AXE 130 140
+
+Food HealthPotion 50 30
+Food SpeedPotion 90 35
+Food LargeHealthPotion 150 70
+Food HealingHerb 40 10
+Food ElvenBread 80 20
+Food FruitJuice 60 15
+Food MeatStew 120 40
+Food RoastedRabbit 100 35
+Food SpicyFish 150 45
+Food SweetBerries 90 25
+Food CursedMeat 200 70
+Food MushroomSoup 140 50
+Food RoyalSoup 250 100
+Food DragonEgg 500 150
+Food ElixirOfLife 1000 200
+Food GoblinStew 80 20
+Food OgreMeat 150 50
+Food ElfBread 120 30
+Food DwarvenAle 100 10
+Food CrystalBerry 180 60
+Food LavaFruit 200 80
+Food VampireBlood 300 100
+Food GoldenApple 500 200
+Food WolfSteak 100 40
+Food FrostedFruit 160 60
+Food EnchantedWater 300 120
+Food MysticHerb 200 80
+Food KrakenTentacle 500 80
+Food TitanFlesh 600 120
+Food HydraEye 700 150
+Food BehemothMeat 800 170
+Food ChimeraFlesh 400 100
+Food FireDragonEgg 800 180
+Food SoulPotion 1200 250
+Food MysticKrakenSauce 750 180
+Food ChimericStew 700 160
