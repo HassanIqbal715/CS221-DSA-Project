@@ -3,16 +3,7 @@
 Shop* Shop::sInstance = nullptr;
 
 Shop::Shop() {
-    addArmor("Iron Helmet", 200, Armor::Type::HELMET, 10);
-    addArmor("Iron Chestplate", 500, Armor::Type::CHESTPLATE, 30);
-    addArmor("Iron Leggings", 300, Armor::Type::LEGGINGS, 20);
-    addArmor("Iron Boots", 200, Armor::Type::BOOTS, 10);
-    addFood("Apple", 50, 20);
-    addWeapon("Iron Sword", 500, Weapon::Type::SWORD, 10, 80);
-    addWeapon("Iron Spear", 500, Weapon::Type::POLEARM, 10, 50);
-    addWeapon("Hunting Bow", 500, Weapon::Type::BOW, 15, 20);
-    addWeapon("Wooden Staff ", 500, Weapon::Type::STAFF, 40, 30);
-    addWeapon("Iron Axe", 500, Weapon::Type::AXE, 40, 30);
+    loadItemsFromFile();
 }
 
 Shop::~Shop() {
@@ -35,6 +26,63 @@ void Shop::addFood(string name, int price, int health) {
 
 void Shop::addWeapon(string name, int price, Weapon::Type type, int attack, int speed) {
     items.push_back(new Weapon(name, price, type, attack, speed));
+}
+
+void Shop::loadItemsFromFile() {
+    ifstream file("database/items.txt");
+    string line;
+
+    while (std::getline(file, line)) {
+        stringstream ss(line);
+        string type;
+        ss >> type;
+
+        if (type == "Armor") {
+            string name;
+            int price, defense;
+            string armorType;
+            ss >> name >> price >> armorType >> defense;
+
+            Armor::Type typeEnum;
+            if (armorType == "HELMET") {
+                typeEnum = Armor::HELMET;
+            } else if (armorType == "CHESTPLATE") {
+                typeEnum = Armor::CHESTPLATE;
+            } else if (armorType == "LEGGINGS") {
+                typeEnum = Armor::LEGGINGS;
+            } else if (armorType == "BOOTS") {
+                typeEnum = Armor::BOOTS;
+            }
+
+            addArmor(name, price, typeEnum, defense);
+        }
+        else if (type == "Food") {
+            std::string name;
+            int price, health;
+            ss >> name >> price >> health;
+
+            addFood(name, price, health);
+        }
+        else if (type == "Weapon") {
+            string name;
+            int price, attack, speed;
+            string weaponType;
+            ss >> name >> price >> weaponType >> attack >> speed;
+
+            Weapon::Type typeEnum;
+            if (weaponType == "SWORD") {
+                typeEnum = Weapon::SWORD;
+            } else if (weaponType == "AXE") {
+                typeEnum = Weapon::AXE;
+            } else if (weaponType == "STAFF") {
+                typeEnum = Weapon::STAFF;
+            } else if (weaponType == "BOW") {
+                typeEnum = Weapon::BOW;
+            }
+
+            addWeapon(name, price, typeEnum, attack, speed);
+        }
+    }
 }
 
 void Shop::removeItemByIndex(int index) {
@@ -63,18 +111,36 @@ Item* Shop::getItemByName(string name) {
 
 void Shop::print() {
     items.startIterator();
-    cout << "Welcome to the shop!\n";
-    cout << "ID\tName\t\tPrice\n";
+    cout << "===========================================\n";
+    cout << "        Welcome to the Shop!\n";
+    cout << "===========================================\n";
+    cout << left << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Type" << setw(10) << "Price\n";
+    cout << "-------------------------------------------\n";
 
     for (int i = 0; i < items.getSize(); i++) {
-        cout << items.getIterator()->data->getID() << "\t";
-        cout << items.getIterator()->data->getName() << "\t";
-        cout << items.getIterator()->data->getPrice() << endl;
+        Item* currentItem = items.getIterator()->data;
+
+        string itemType = "Unknown";
+        if (dynamic_cast<Armor*>(currentItem)) {
+            itemType = "Armor";
+        } else if (dynamic_cast<Weapon*>(currentItem)) {
+            itemType = "Weapon";
+        } else if (dynamic_cast<Food*>(currentItem)) {
+            itemType = "Food";
+        }
+
+        cout << left << setw(5) << currentItem->getID() 
+             << setw(20) << currentItem->getName() 
+             << setw(10) << itemType 
+             << setw(10) << currentItem->getPrice() << endl;
+
         items.iterateOnce();
     }
 
-    items.resetIterator();  // Reset to head after iteration
+    items.resetIterator();
+    cout << "===========================================\n";
 }
+
 
 void Shop::printOptions() {
     cout << "1. Purchase Item by Index\n";
