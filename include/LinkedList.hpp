@@ -169,6 +169,20 @@ public:
             return nullptr;
     }
 
+    Node* searchByKey(const T& key) {
+        if (isEmpty())
+            return nullptr;
+
+        Node* tempNode = head;
+        do {
+            if (tempNode->data == key)
+                return tempNode;
+            tempNode = tempNode->next;
+        } while (tempNode != head);
+
+        return nullptr;
+    }
+
     void deleteNodeByIndex(int index) {
         if (isEmpty() || index < 0 || index >= size)
             return;
