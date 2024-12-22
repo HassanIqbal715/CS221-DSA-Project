@@ -28,14 +28,15 @@ public:
 
     int getSkillFactor();
 
+    friend class SkillTree;
+
     ~Skill();
 };
 
 class AttackSkill : public Skill{
 public:
-    void attack(Enemy& enemy){
-        enemy.setHealth(enemy.getHealth() - skillFactor);
-    }
+    AttackSkill(int ID, string name, string descrption, int skillFactor);
+    void attack(Enemy& enemy);
 };
 
 class BuffSkill : public Skill{

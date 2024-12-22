@@ -7,7 +7,7 @@ Skill::Skill() {
     skillFactor = 1;
 }
 
-Skill::Skill(int ID, string name, string descrption, int skillFactor) :
+Skill::Skill(int ID, string name, string description, int skillFactor) :
     ID(ID), name(name), description(description), skillFactor(skillFactor){}
 
 Skill::~Skill() {
@@ -22,6 +22,9 @@ int Skill::getSkillFactor(){
         return skillFactor;
 }
 
+AttackSkill::AttackSkill(int ID, string name, string description, int skillFactor) :
+    Skill(ID, name, description, skillFactor){}
+
 void AttackSkill::attack(Enemy& enemy){
         enemy.setHealth(enemy.getHealth() - skillFactor);
 }
@@ -34,7 +37,7 @@ BuffSkill::BuffSkill() {
     buffType = DEFENSE;
 }
 
-BuffSkill::BuffSkill(int ID, string name, string descrption, int skillFactor,
+BuffSkill::BuffSkill(int ID, string name, string description, int skillFactor,
     Buff buffType) : Skill(ID, name, description, skillFactor), 
     buffType(buffType){}
 

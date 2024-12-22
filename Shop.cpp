@@ -259,11 +259,11 @@ int Shop::input(Character *&character) {
 
             index = rand() % items.getSize();
             cout << "You got";
-            Sleep(1000);
+            //Sleep(1000);
             cout << ".";
-            Sleep(1000);
+            //Sleep(1000);
             cout << ".";
-            Sleep(1000);
+            //Sleep(1000);
             cout << ".";
             item = getItemByIndex(index);
 
@@ -280,7 +280,7 @@ int Shop::input(Character *&character) {
                 Inventory::instance()->insertItem(food);
             }
             cout << '\n';
-            Sleep(1000);
+            //Sleep(1000);
             break;
 
         case 0:

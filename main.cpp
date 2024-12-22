@@ -11,11 +11,17 @@
 #include "include/Menu.hpp"
 #include "include/Shop.hpp"
 #include "include/Character.hpp"
+#include "include/Skill.hpp"
+#include "include/SkillTree.hpp"
+
 using namespace std;
 
 //  cout << "\n---------------------------\n"; use this to divide lines
 
 int main() {
+
+    SkillTree skillTree;
+    skillTree.levelOrderTraversal();
     srand(time(0));
     initGlobalVar();
     int option{-1};
