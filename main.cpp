@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <iomanip>
+#include <ctime>
 #include "include/Functions.hpp"
 #include "include/Game.hpp"
 #include "include/GlobalVariables.hpp"
@@ -15,19 +16,31 @@ using namespace std;
 //  cout << "\n---------------------------\n"; use this to divide lines
 
 int main() {
+    srand(time(0));
     initGlobalVar();
-    printTitle();
     int option{-1};
     int characterOption{-1};
 
-    Character* granola = new Character();
-    Character* peanut = new Character();
-    Character* abdullah = new Character();
+    // Character* granola = new Character("Granola", 1000, 150, 150, 200);
+    // Character* peanut = new Character("Peanut", 600, 400, 50, 250);
+    // Character* abdullah = new Character("Fake Abdullah", 2500, 100, 200, 150);
+
+    Character* granola = nullptr;
+    Character* peanut = nullptr;
+    Character* abdullah = nullptr;
+
+    vector<Character*> characters = loadCharacterData();
+    granola = characters[0];
+    peanut = characters[1];
+    abdullah = characters[2];
+    Inventory::instance()->loadInventory();
+
+    printTitle();
+    
     while (gameRunner) {
         cout << "\n---------------------------\n";
         Menu::instance()->print();
         cout << "Enter your option: ";
-        granola->levelUp();
         cin >> option;
         // system("cls"); Commented out due to not working on linux
         // can use clear on linux machine but in turn will not work on windows
@@ -53,15 +66,6 @@ int main() {
                 else {
                     Game::instance()->input(granola);
                 }
-
-                break;
-            
-            case 2:
-                cout << "\n---------------------------\n";
-                Shop::instance()->print();
-                break;
-
-            case 3:
                 break;
 
             case 0:
@@ -73,8 +77,19 @@ int main() {
                 continue;
         }
     }
+
+    cleanSaveFiles();
+    saveCharacterData(granola);
+    saveCharacterData(peanut);
+    saveCharacterData(abdullah);
+    Inventory::instance()->saveInventory();
+
     Inventory::release();
     Menu::release();
     Shop::release();
+
+    delete granola;
+    delete peanut;
+    delete abdullah;
     return 0;
 }

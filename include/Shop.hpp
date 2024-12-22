@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -6,6 +7,7 @@
 #include <string>
 #include "Item.hpp"
 #include "LinkedList.hpp"
+#include "Inventory.hpp"
 
 using namespace std;
 class Shop {
@@ -32,8 +34,9 @@ public:
     void print();
     void printOptions();
     
-    void input();
-    void purchase();
+    int input(Character *& character);
+    void purchase(Item *item);
+    void sell(Item *item);
 
     void releaseElements();
     static void release();

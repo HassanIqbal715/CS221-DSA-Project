@@ -32,21 +32,21 @@ void Game::play(Character *&character) {
 
 void Game::fight(Character *&character) {
     int enemyIndex = rand() % enemies.getSize();
-    int enemyLevel = character->getLevel() - rand() % character->getLevel() + rand() % character->getLevel();
+    int enemyLevel = character->getLevel() - rand() % character->getLevel() + (rand() % character->getLevel()) / 2;
 
-    Enemy* currentEnemy = enemies.searchNodeByIndex(enemyIndex)->data;
-    currentEnemy->scaleStats(enemyLevel);
+    Enemy currentEnemy = *(enemies.searchNodeByIndex(enemyIndex)->data);
+    currentEnemy.scaleStats(enemyLevel);
 
-    cout << "A wild" << currentEnemy->getName() << "has appeared!.\n\n";
+    cout << "A wild " << currentEnemy.getName() << " has appeared!.\n\n";
     bool isFighting = true;
 
     while (isFighting) {
         static int option;
         cout << "---------------------------\n";
-        cout << currentEnemy->getName() << endl;
+        cout << currentEnemy.getName() << endl;
         cout << "LVL. " << enemyLevel << endl;
-        printHealthBar(currentEnemy->getHealth(), currentEnemy->getMaxHealth());
-        cout << currentEnemy->getHealth() << " / " << currentEnemy->getMaxHealth();
+        printHealthBar(currentEnemy.getHealth(), currentEnemy.getMaxHealth());
+        cout << currentEnemy.getHealth() << " / " << currentEnemy.getMaxHealth();
 
         cout << "\n\n";
         cout << character->getName() << endl;
@@ -66,32 +66,126 @@ void Game::fight(Character *&character) {
 
         switch (option) {
             case 1:
-                if (character->getSpeed() > currentEnemy->getSpeed()) {
+                if (character->getSpeed() > currentEnemy.getSpeed()) {
 
-                    currentEnemy->takeDamage(character->getAttack());
+                    cout << "You deal " << currentEnemy.takeDamage(character->getAttack()) << " damage!\n";
 
-                    if (currentEnemy->getHealth() <= 0) {
-                        Inventory::instance()->insertItem(currentEnemy->getDropItem());
-                        userBalance += currentEnemy->getDropCoins();
+                    if (currentEnemy.checkDead()) {
+                        cout << currentEnemy.getName() << " is dead! You won!\n";
+                        auto Item = currentEnemy.getDropItem();
+                        if (Item != nullptr)
+                            Inventory::instance()->insertItem(Item);
+                        userBalance += currentEnemy.getDropCoins();
                     
-                        character->setExp(character->getExp() + currentEnemy->getDropCoins() * enemyLevel *
-                                          character->getLevel());
+                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel);
+
+                        cout << "You gained " << currentEnemy.getDropCoins() << " coins!\n";
 
                         if (character->checkLevelUp()) {
                             character->levelUp();
-                            cout << "Level Up! New Stats: " << endl;
-                            cout << "Level: " << character->getLevel() << endl;
-                            cout << "Health: " << character->getMaxHealth() << endl;
-                            cout << "Attack: " << character->getAttack() << endl;
-                            cout << "Defense: " << character->getDefense() << endl;
-                            cout << "Speed: " << character->getSpeed() << endl;
+                            character->printLevelUpMessage();
                         }
+
+                        isFighting = false;
+                        break;
+                    }
+
+                    cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
+
+                    if (character->checkDead()) {
+                        userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
+                        isFighting = false;
+                        cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
+                        break;
                     }
                 }
                 else {
+                    cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
+                    if (character->checkDead()) {
+                        userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
+                        isFighting = false;
+                        cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
+                        break;
+                    }
 
+                    cout << "You deal " << currentEnemy.takeDamage(character->getAttack()) << " damage!\n";
+
+                    if (currentEnemy.checkDead()) {
+                        auto Item = currentEnemy.getDropItem();
+                        if (Item != nullptr)
+                            Inventory::instance()->insertItem(Item);
+                        userBalance += currentEnemy.getDropCoins();
+                    
+                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel);
+                        
+                        cout << "You gained " << currentEnemy.getDropCoins() << " coins!\n";
+
+                        if (character->checkLevelUp()) {
+                            character->levelUp();
+                            character->printLevelUpMessage();
+                        }
+
+                        isFighting = false;
+                        break;
+                    }                    
                 }
-                
+                break;
+            
+            case 2:
+                Inventory::instance()->printItems();
+                Inventory::instance()->printOptions();
+                cout << "Enter your option: ";
+                if (Inventory::instance()->input(character) != 0) {
+                    cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
+                    if (character->checkDead()) {
+                        userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
+                        isFighting = false;
+                        cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
+                        break;
+                    }
+                }
+
+                break;
+            
+            case 3:
+                // Add skills stuff here
+                break;
+
+            case 0:
+                if (rand()%10 + 1 > 4) {
+                    cout << "You managed to run away!\n";
+                    isFighting = false;
+                }
+                else {
+                    cout << "You could not run away...\n";                    
+                    cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
+                    if (character->checkDead()) {
+                        userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
+                        isFighting = false;
+                        cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
+                        break;
+                    }
+                }
+                break;
+
+            default:
+                cout << "Invalid input.\n";
                 break;
         }
     }   
@@ -103,6 +197,7 @@ void Game::printMenu() {
     cout << "\t2. Inventory\n";
     cout << "\t3. Skills\n";
     cout << "\t4. Shop\n";
+    cout << "\t5. Check Equipment\n";
     cout << "\t0. Return to Title Screen\n";
 }
 
@@ -121,12 +216,12 @@ void Game::input(Character *&character) {
 
             case 2:
                 while (option != 0) {
-                cout << "\n------------------------------\n";
-                Inventory::instance()->printItems();
-                cout << "\n------------------------------\n";
-                Inventory::instance()->printOptions();
-                cout << "Enter your option: ";
-                option = Inventory::instance()->input(character);
+                    cout << "\n------------------------------\n";
+                    Inventory::instance()->printItems();
+                    cout << "\n------------------------------\n";
+                    Inventory::instance()->printOptions();
+                    cout << "Enter your option: ";
+                    option = Inventory::instance()->input(character);
                 }
                 option = -1;
                 break;
@@ -135,8 +230,19 @@ void Game::input(Character *&character) {
                 break;
 
             case 4:
-                cout << "\n---------------------------\n";
-                Shop::instance()->print();
+                while (option != 0) {
+                    cout << "\n---------------------------\n";
+                    Shop::instance()->print();
+                    cout << "\n---------------------------\n";
+                    Shop::instance()->printOptions();
+                    cout << "Enter your option: ";
+                    option = Shop::instance()->input(character);
+                }
+                option = -1;
+                break;
+            
+            case 5:
+                character->printEquipment();
                 break;
 
             case 0:
@@ -155,20 +261,25 @@ void Game::loadEnemiesFromFile() {
     string line;
 
     if (!file.is_open()) {
-        cout << "Failed to open Enemies.txt\n";
+        cout << "Failed to open enemies.txt\n";
         return;
     }
 
     while (getline(file, line)) {
         istringstream stream(line);
-        string name;
+        string name, itemDropName;
         int health, attack, speed, defense, level, coinsDrop;
-        string itemDropName;
 
-        stream >> name >> health >> attack >> speed >> defense >> itemDropName >> coinsDrop;
+        getline(stream, name, ',');
+        stream >> health; stream.ignore();
+        stream >> attack; stream.ignore();
+        stream >> speed; stream.ignore();
+        stream >> defense; stream.ignore();
+        getline(stream, itemDropName, ',');
+        stream >> coinsDrop;
 
         Item* dropItem = Shop::instance()->getItemByName(itemDropName);
-        
+
         if (dropItem == nullptr) {
             cout << "Error: Item " << itemDropName << " not found\n";
             continue;
@@ -177,7 +288,6 @@ void Game::loadEnemiesFromFile() {
         Enemy* enemy = new Enemy(name, health, attack, speed, defense, dropItem, coinsDrop);
         enemies.push_back(enemy);
     }
-
     file.close();
 }
 

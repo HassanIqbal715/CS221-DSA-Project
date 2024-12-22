@@ -22,7 +22,7 @@ Character::Character() {
     }
 }
 
-Character::Character(string name, int health, int attack, int defense, int speed) {
+Character::Character(string name, int health, int attack, int defense, int speed, int level, int exp, int targetExp) {
     this->name = name;
     this->health = health;
     this->maxHealth = health;
@@ -32,12 +32,10 @@ Character::Character(string name, int health, int attack, int defense, int speed
     this->baseDefense = defense;
     this->speed = speed;
     this->baseSpeed = speed;
-    exp = 500;
-    targetExp =  500 ;
-    level = 4;
-
+    this->level = level;
+    this->exp = exp;
+    this->targetExp = targetExp; 
     levelUp();
-
     weapon = nullptr;
     armorSet = new Armor*[4];
     
@@ -138,12 +136,24 @@ int Character::getAttack() {
     return attack;
 }
 
+int Character::getBaseAttack() {
+    return baseAttack;
+}
+
 int Character::getDefense() {
     return defense;
 }
 
+int Character::getBaseDefense() {
+    return baseDefense;
+}
+
 int Character::getSpeed() {
     return speed;
+}
+
+int Character::getBaseSpeed() {
+    return baseSpeed;
 }
 
 Weapon* Character::getWeapon() {
@@ -158,88 +168,184 @@ bool Character::checkLevelUp() {
     return (exp >= targetExp);
 }
 
+bool Character::checkDead() {
+    return health <= 0;
+}
+
 void Character::levelUp() {
-    ++level;
-    exp -= targetExp;
-    attack -= baseAttack;
-    defense -= baseDefense;
-    speed -= baseSpeed;
+    while (exp >= targetExp) {
+        ++level;
+        exp -= targetExp;
+        attack -= baseAttack;
+        defense -= baseDefense;
+        speed -= baseSpeed;
 
-    targetExp *= 1.5;
-    if (level <= 5) {
-        maxHealth += 100;
-        baseAttack += 10;
-        baseDefense += 5;
-        baseSpeed += 2;
-    }
-    else if (level <= 10) {
-        maxHealth += 150;
-        baseAttack += 20;
-        baseDefense += 10;
-        baseSpeed += 4;
-    }
-    else if (level <= 15) {
-        maxHealth += 200;
-        baseAttack += 30;
-        baseDefense += 15;
-        baseSpeed += 6;
-    }
-    else if (level <= 20) {
-        maxHealth += 250;
-        baseAttack += 40;
-        baseDefense += 20;
-        baseSpeed += 8;
-    }
-    else if (level <= 25) {
-        maxHealth += 300;
-        baseAttack += 50;
-        baseDefense += 25;
-        baseSpeed += 10;
-    }
-    else if (level <= 30) {
-        maxHealth += 350;
-        baseAttack += 60;
-        baseDefense += 30;
-        baseSpeed += 12;
-    }
-    else if (level <= 35) {
-        maxHealth += 400;
-        baseAttack += 70;
-        baseDefense += 35;
-        baseSpeed += 14;
-    }
-    else if (level <= 40) {
-        maxHealth += 450;
-        baseAttack += 80;
-        baseDefense += 40;
-        baseSpeed += 16;
-    }
-    else if (level <= 45) {
-        maxHealth += 500;
-        baseAttack += 90;
-        baseDefense += 45;
-        baseSpeed += 18;
-    }
-    else if (level <= 50) {
-        maxHealth += 550;
-        baseAttack += 100;
-        baseDefense += 50;
-        baseSpeed += 20;
-    }
+        targetExp *= 1.2;
+        if (level <= 5) {
+            maxHealth += 100;
+            baseAttack += 10;
+            baseDefense += 5;
+            baseSpeed += 2;
+        }
+        else if (level <= 10) {
+            maxHealth += 150;
+            baseAttack += 20;
+            baseDefense += 10;
+            baseSpeed += 4;
+        }
+        else if (level <= 15) {
+            maxHealth += 200;
+            baseAttack += 30;
+            baseDefense += 15;
+            baseSpeed += 6;
+        }
+        else if (level <= 20) {
+            maxHealth += 250;
+            baseAttack += 40;
+            baseDefense += 20;
+            baseSpeed += 8;
+        }
+        else if (level <= 25) {
+            maxHealth += 300;
+            baseAttack += 50;
+            baseDefense += 25;
+            baseSpeed += 10;
+        }
+        else if (level <= 30) {
+            maxHealth += 350;
+            baseAttack += 60;
+            baseDefense += 30;
+            baseSpeed += 12;
+        }
+        else if (level <= 35) {
+            maxHealth += 400;
+            baseAttack += 70;
+            baseDefense += 35;
+            baseSpeed += 14;
+        }
+        else if (level <= 40) {
+            maxHealth += 450;
+            baseAttack += 80;
+            baseDefense += 40;
+            baseSpeed += 16;
+        }
+        else if (level <= 45) {
+            maxHealth += 500;
+            baseAttack += 90;
+            baseDefense += 45;
+            baseSpeed += 18;
+        }
+        else if (level <= 50) {
+            maxHealth += 550;
+            baseAttack += 100;
+            baseDefense += 50;
+            baseSpeed += 20;
+        }
 
-    health = maxHealth;
-    attack = baseAttack;
-    defense = baseDefense;
-    speed = baseSpeed;
+        health = maxHealth;
+        attack = baseAttack;
+        defense = baseDefense;
+        speed = baseSpeed;
+    }
+}
+
+int Character::takeDamage(int damage) {
+    damage = (damage  + rand() % 100) - 0.25 * defense;
+    if (damage < 0)
+        damage = 5;
+    health = health - damage;
+    return damage;
 }
 
 void Character::consumeItem(Food &food) {
     if (health + food.getHealth() >= maxHealth) {
+        cout << "You gained " << maxHealth - health << " health!\n";
         health = maxHealth;
+        cout << "Your health is full now!\n";
     }
     else {
         health += food.getHealth();
+        cout << "You gained " << food.getHealth() << " health!\n";
     }
+}
+
+void Character::gainExp(int exp) {
+    this->exp += exp;
+}
+
+void Character::printLevelUpMessage() {
+    cout << "Level Up! New Stats: " << endl;
+    cout << "Level: " << level << endl;
+    cout << "Health: " << maxHealth << endl;
+    cout << "Attack: " << attack << endl;
+    cout << "Defense: " << defense << endl;
+    cout << "Speed: " << speed << endl;
+}
+
+void Character::printEquipment() {
+    cout << "Armor: \n";
+    cout << "\tHelmet: \n";
+    if (armorSet[0] != nullptr) {
+        cout << "\t\tName: " << armorSet[0]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[0]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[0]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tChestplate: \n";
+    if (armorSet[1] != nullptr) {
+        cout << "\t\tName: " << armorSet[1]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[1]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[1]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tLeggings: \n";
+    if (armorSet[2] != nullptr) {
+        cout << "\t\tName: " << armorSet[2]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[2]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[2]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tBoots: \n";
+    if (armorSet[3] != nullptr) {
+        cout << "\t\tName: " << armorSet[3]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[3]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[3]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\nWeapon: \n";
+    if (weapon == nullptr) {
+        cout << "\tNone";
+        return;
+    }
+    cout << "\tName: " << weapon->getName() << '\n';
+    cout << "\tType: ";
+    if (weapon->getType() == Weapon::Type::AXE)
+        cout << "AXE";
+    else if (weapon->getType() == Weapon::Type::BOW)
+        cout << "BOW";
+    else if (weapon->getType() == Weapon::Type::POLEARM)
+        cout << "POLEARM";
+    else if (weapon->getType() == Weapon::Type::STAFF)
+        cout << "STAFF";
+    else if (weapon->getType() == Weapon::Type::SWORD)
+        cout << "SWORD";
+    else
+        cout << "NONE";
+    cout << '\n';
+    cout << "\tAttack: " << weapon->getAttack() << '\n';
+    cout << "\tSpeed: " << weapon->getSpeed() << '\n';
 }
 
 Character::~Character() {

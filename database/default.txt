@@ -1,0 +1,3 @@
+Granola,1000,1000,150,150,200,4,500,500,None,None,None,None,None
+Peanut,800,800,420,60,254,4,500,500,None,None,None,None,None
+Fake Abdullah,2700,2700,120,210,154,4,500,500,None,None,None,None,None
