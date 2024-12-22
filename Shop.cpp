@@ -165,6 +165,7 @@ void Shop::printOptions() {
     cout << "4. Check current equipment\n";
     cout << "5. Sell Item by Index\n";
     cout << "6. Sell Item by Name\n";
+    cout << "7. Minigame purchase random item for 1000Rs\n";
     cout << "0. Exit\n";
 }
 
@@ -243,6 +244,38 @@ int Shop::input(Character *&character) {
             else {
                 cout << "Item not found\n";
             }
+            break;
+
+        case 7:
+            if (userBalance < 1000) {
+                cout << "Insufficient funds.\n";
+                break;
+            }
+
+            index = rand() % items.getSize();
+            cout << "You got";
+            Sleep(1000);
+            cout << ".";
+            Sleep(1000);
+            cout << ".";
+            Sleep(1000);
+            cout << ".";
+            item = getItemByIndex(index);
+
+            if (Armor* armor = dynamic_cast<Armor*>(item)) {
+                cout << " " << armor->getName();
+                Inventory::instance()->insertItem(armor);
+            }
+            else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
+                cout << " " << weapon->getName();
+                Inventory::instance()->insertItem(weapon);
+            }
+            else if (Food* food = dynamic_cast<Food*>(item)) {
+                cout << " " << food->getName();
+                Inventory::instance()->insertItem(food);
+            }
+            cout << '\n';
+            Sleep(1000);
             break;
 
         case 0:

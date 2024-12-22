@@ -65,7 +65,6 @@ int main() {
                 else {
                     Game::instance()->input(granola);
                 }
-
                 break;
 
             case 0:
