@@ -38,7 +38,7 @@ void fixStringCase(string& text) {
             }
         }
         else {
-            if (text[i] >= 'a' && text[i] >= 'z') {
+            if (text[i] >= 'a' && text[i] <= 'z') {
                 text[i] -= 32;
             }
         }

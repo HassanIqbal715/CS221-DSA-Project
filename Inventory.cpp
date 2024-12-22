@@ -282,7 +282,7 @@ void Inventory::sort() {
 
 void Inventory::printItems() {
     items.startIterator();
-    cout << "Sr.\tName\t\tQuantity\n";
+    cout << "Sr.\tName\n";
 
     for (int i = 0; i < items.getSize(); i++) {
         if (i >= 0 && i <= 9)
@@ -454,7 +454,6 @@ void Inventory::loadInventory() {
     }
 
     file.close();
-    std::cout << "Inventory loaded successfully.\n";
 }
 
 int Inventory::input(Character* character) {
@@ -494,6 +493,8 @@ int Inventory::input(Character* character) {
             cout << "Enter name: ";
             cin.ignore();
             getline(cin, name);
+
+            fixStringCase(name);
 
             auto* temp = searchItemByName(name);
 

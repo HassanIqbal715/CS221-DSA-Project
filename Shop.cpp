@@ -193,7 +193,10 @@ int Shop::input(Character *&character) {
         
         case 2:
             cout << "Enter name: ";
-            cin >> name;
+            cin.ignore();
+            getline(cin, name);
+            fixStringCase(name);
+            cout << name;
             item = getItemByName(name);
             if (item != nullptr) {
                 if (userBalance >= item->getPrice()) {
@@ -234,7 +237,9 @@ int Shop::input(Character *&character) {
         
         case 6:
             cout << "Enter name: ";
-            cin >> name;
+            cin.ignore();
+            getline(cin, name);
+            fixStringCase(name);
             item = Inventory::instance()->searchItemByName(name);
             if (item != nullptr) {
                 cout << "Item sold successfully.\n";
@@ -263,15 +268,15 @@ int Shop::input(Character *&character) {
             item = getItemByIndex(index);
 
             if (Armor* armor = dynamic_cast<Armor*>(item)) {
-                cout << " " << armor->getName();
+                cout << " " << armor->getName() << "\n";
                 Inventory::instance()->insertItem(armor);
             }
             else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
-                cout << " " << weapon->getName();
+                cout << " " << weapon->getName() << "\n";
                 Inventory::instance()->insertItem(weapon);
             }
             else if (Food* food = dynamic_cast<Food*>(item)) {
-                cout << " " << food->getName();
+                cout << " " << food->getName() << "\n";
                 Inventory::instance()->insertItem(food);
             }
             cout << '\n';

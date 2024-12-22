@@ -41,6 +41,7 @@ public:
 
     void saveInventory();
     void loadInventory();
+    
     int input(Character* character);
     void inputSubOptions(Character* character, Item* item);
 };
