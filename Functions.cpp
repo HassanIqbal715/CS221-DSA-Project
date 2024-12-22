@@ -45,28 +45,33 @@ void fixStringCase(string& text) {
     }
 }
 
-void cleanSaveFile() {
+void cleanSaveFiles() {
     // removes everything by opening the file normally
-    ofstream saveFile("database/saveFile.txt");
-    saveFile.close();
+    ofstream characterFile("database/saveCharacters.txt");
+    characterFile.close();
+    ofstream inventoryFile("database/saveInventory.txt");
+    inventoryFile.close();
 }
 
 void saveCharacterData(Character *&character) {
     // opens the file in append mode
-    ofstream saveFile("database/savefile.txt", ios::app);
+    ofstream saveFile("database/saveCharacters.txt", ios::app);
 
     if (saveFile.is_open()) {
-        saveFile << character->getName() << " " 
-                << character->getHealth() << " " 
-                << character->getMaxHealth() << " " 
-                << character->getBaseAttack() << " " 
-                << character->getBaseDefense() << " " 
-                << character->getBaseSpeed() << " ";
+        saveFile << character->getName() << "," 
+                << character->getHealth() << "," 
+                << character->getMaxHealth() << "," 
+                << character->getBaseAttack() << "," 
+                << character->getBaseDefense() << "," 
+                << character->getBaseSpeed() << ","
+                << character->getLevel() << ","
+                << character->getExp() << ","
+                << character->getTargetExp() << ",";
 
-        saveFile << (character->getWeapon() ? character->getWeapon()->getName() : "None") << " ";
+        saveFile << (character->getWeapon() ? character->getWeapon()->getName() : "None") << ",";
 
         for (int i = 0; i < 4; ++i) {
-            saveFile << (character->getArmor()[i] ? character->getArmor()[i]->getName() : "None") << " ";
+            saveFile << (character->getArmor()[i] ? character->getArmor()[i]->getName() : "None") << ",";
         }
 
         saveFile << "\n";
@@ -75,4 +80,66 @@ void saveCharacterData(Character *&character) {
     else {
         cout << "Failed to open the save file.\n";
     }
+}
+
+vector<Character*> loadCharacterData() {
+    vector<Character*> characters;
+    ifstream loadFile("database/saveCharacters.txt");
+
+    if (!loadFile.is_open()) {
+        cout << "Failed to open the save file.\n";
+        return characters;
+    }
+
+    string line;
+    while (getline(loadFile, line)) {
+        stringstream ss(line);
+
+        string name, weaponName, healthStr, maxHealthStr, baseAttackStr, baseDefenseStr, baseSpeedStr;
+        string levelStr, expStr, targetExpStr;
+        string armorNames[4];
+        int health, maxHealth, baseAttack, baseDefense, baseSpeed, level, exp, targetExp;
+
+        getline(ss, name, ',');
+        getline(ss, healthStr, ',');
+        getline(ss, maxHealthStr, ',');
+        getline(ss, baseAttackStr, ',');
+        getline(ss, baseDefenseStr, ',');
+        getline(ss, baseSpeedStr, ',');
+        getline(ss, levelStr, ',');
+        getline(ss, expStr, ',');
+        getline(ss, targetExpStr, ',');
+        getline(ss, weaponName, ',');
+        for (int i = 0; i < 4; ++i) {
+            getline(ss, armorNames[i], ',');
+        }
+
+        // Convert string to integer values
+        health = stoi(healthStr);
+        maxHealth = stoi(maxHealthStr);
+        baseAttack = stoi(baseAttackStr);
+        baseDefense = stoi(baseDefenseStr);
+        baseSpeed = stoi(baseSpeedStr);
+        level = stoi(levelStr);
+        exp = stoi(expStr);
+        targetExp = stoi(targetExpStr);
+        Character* character = new Character(name, health, baseAttack, baseDefense, baseSpeed, level, exp, targetExp);
+
+        if (weaponName != "None") {
+            Weapon* weapon = dynamic_cast<Weapon*>(Shop::instance()->getItemByName(weaponName)->clone());
+            character->setWeapon(*weapon);
+        }
+
+        for (int i = 0; i < 4; ++i) {
+            if (armorNames[i] != "None") {
+                Armor* armor = dynamic_cast<Armor*>(Shop::instance()->getItemByName(armorNames[i])->clone());
+                character->setArmor(*armor);
+            }
+        }
+
+        characters.push_back(character);
+    }
+
+    loadFile.close();
+    return characters;
 }

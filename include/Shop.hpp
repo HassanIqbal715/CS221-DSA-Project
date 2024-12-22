@@ -33,8 +33,9 @@ public:
     void print();
     void printOptions();
     
-    int input();
+    int input(Character *& character);
     void purchase(Item *item);
+    void sell(Item *item);
 
     void releaseElements();
     static void release();

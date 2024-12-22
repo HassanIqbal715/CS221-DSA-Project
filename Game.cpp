@@ -183,6 +183,7 @@ void Game::printMenu() {
     cout << "\t2. Inventory\n";
     cout << "\t3. Skills\n";
     cout << "\t4. Shop\n";
+    cout << "\t5. Check Equipment\n";
     cout << "\t0. Return to Title Screen\n";
 }
 
@@ -221,9 +222,13 @@ void Game::input(Character *&character) {
                     cout << "\n---------------------------\n";
                     Shop::instance()->printOptions();
                     cout << "Enter your option: ";
-                    option = Shop::instance()->input();
+                    option = Shop::instance()->input(character);
                 }
                 option = -1;
+                break;
+            
+            case 5:
+                character->printEquipment();
                 break;
 
             case 0:
@@ -242,20 +247,25 @@ void Game::loadEnemiesFromFile() {
     string line;
 
     if (!file.is_open()) {
-        cout << "Failed to open Enemies.txt\n";
+        cout << "Failed to open enemies.txt\n";
         return;
     }
 
     while (getline(file, line)) {
         istringstream stream(line);
-        string name;
+        string name, itemDropName;
         int health, attack, speed, defense, level, coinsDrop;
-        string itemDropName;
 
-        stream >> name >> health >> attack >> speed >> defense >> itemDropName >> coinsDrop;
+        getline(stream, name, ',');
+        stream >> health; stream.ignore();
+        stream >> attack; stream.ignore();
+        stream >> speed; stream.ignore();
+        stream >> defense; stream.ignore();
+        getline(stream, itemDropName, ',');
+        stream >> coinsDrop;
 
         Item* dropItem = Shop::instance()->getItemByName(itemDropName);
-        
+
         if (dropItem == nullptr) {
             cout << "Error: Item " << itemDropName << " not found\n";
             continue;
@@ -264,7 +274,6 @@ void Game::loadEnemiesFromFile() {
         Enemy* enemy = new Enemy(name, health, attack, speed, defense, dropItem, coinsDrop);
         enemies.push_back(enemy);
     }
-
     file.close();
 }
 

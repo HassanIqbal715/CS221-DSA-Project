@@ -29,7 +29,5 @@ void Menu::release() {
 void Menu::print() {
     cout << "Main Menu\n";
     cout << "\t1. Play\n";
-    cout << "\t2. Shop\n";
-    cout << "\t3. Skills\n";
     cout << "\t0. Exit\n";
 }

@@ -49,6 +49,10 @@ void Inventory::removeItem(Item* item) {
 }
 
 Item* Inventory::searchItemByIndex(int index) {
+    if (index >= items.getSize() || index < 0) {
+        cout << "Index out of bounds";
+        return nullptr;
+    }
     return items.searchNodeByIndex(index)->data;
 }
 
@@ -320,57 +324,57 @@ void Inventory::saveInventory() {
     for (int i = 0; i < items.getSize(); ++i) {
         Item* currentItem = items.getIterator()->data;
 
+        // Saving Armor items
         if (Armor* armor = dynamic_cast<Armor*>(currentItem)) {
-            file << "Armor " 
-                 << armor->getName() << " "
-                 << armor->getPrice() << " ";
+            file << "Armor," 
+                 << armor->getName() << ","
+                 << armor->getPrice() << ",";
             if (armor->getType() == Armor::Type::HELMET) {
-                file << "HELMET ";
+                file << "HELMET,";
             }
             else if (armor->getType() == Armor::Type::CHESTPLATE) {
-                file << "CHESTPLATE ";
+                file << "CHESTPLATE,";
             }
             else if (armor->getType() == Armor::Type::LEGGINGS) {
-                file << "LEGGINGS ";
+                file << "LEGGINGS,";
             }
             else if (armor->getType() == Armor::Type::BOOTS) {
-                file << "BOOTS ";
+                file << "BOOTS,";
             }
-
             file << armor->getDefense() << "\n";
         }
         // Saving Weapon items
         else if (Weapon* weapon = dynamic_cast<Weapon*>(currentItem)) {
-            file << "Weapon " 
-                 << weapon->getName() << " "
-                 << weapon->getPrice() << " ";
+            file << "Weapon," 
+                 << weapon->getName() << ","
+                 << weapon->getPrice() << ",";
             
             if (weapon->getType() == Weapon::Type::NONE) {
-                file << "NONE ";
+                file << "NONE,";
             }
             else if (weapon->getType() == Weapon::Type::AXE) {
-                file << "AXE ";
+                file << "AXE,";
             }
             else if (weapon->getType() == Weapon::Type::SWORD) {
-                file << "SWORD ";
+                file << "SWORD,";
             }
             else if (weapon->getType() == Weapon::Type::STAFF) {
-                file << "STAFF ";
+                file << "STAFF,";
             }
             else if (weapon->getType() == Weapon::Type::BOW) {
-                file << "BOW ";
+                file << "BOW,";
             }
             else if (weapon->getType() == Weapon::Type::POLEARM) {
-                file << "POLEARM ";
+                file << "POLEARM,";
             }
-            file << weapon->getAttack() << " ";
-            file << weapon->getSpeed() << "\n";
+            file << weapon->getAttack() << ","
+                 << weapon->getSpeed() << "\n";
         }
         // Saving Food items
         else if (Food* food = dynamic_cast<Food*>(currentItem)) {
-            file << "Food " 
-                 << food->getName() << " "
-                 << food->getPrice() << " "
+            file << "Food," 
+                 << food->getName() << ","
+                 << food->getPrice() << ","
                  << food->getHealth() << "\n";
         }
 
@@ -379,6 +383,78 @@ void Inventory::saveInventory() {
 
     items.resetIterator();
     file.close();
+}
+
+void Inventory::loadInventory() {
+    std::ifstream file("database/saveInventory.txt");
+
+    if (!file.is_open()) {
+        std::cerr << "Error opening file to load inventory." << std::endl;
+        return;
+    }
+
+    std::string line;
+
+    while (std::getline(file, line)) {
+        std::istringstream stream(line);
+        std::string itemType, itemName, armorType, weaponType;
+        int price, defense, attack, speed, health;
+
+        // Read the type of item
+        std::getline(stream, itemType, ',');
+
+        if (itemType == "Armor") {
+            // Read armor data
+            std::getline(stream, itemName, ',');
+            stream >> price;
+            stream.ignore(1); // Ignore the comma
+            std::getline(stream, armorType, ',');
+            stream >> defense;
+
+            Armor::Type type;
+            if (armorType == "HELMET") type = Armor::Type::HELMET;
+            else if (armorType == "CHESTPLATE") type = Armor::Type::CHESTPLATE;
+            else if (armorType == "LEGGINGS") type = Armor::Type::LEGGINGS;
+            else if (armorType == "BOOTS") type = Armor::Type::BOOTS;
+
+            Armor* armor = new Armor(itemName, price, type, defense);
+            insertItem(armor);
+        } 
+        else if (itemType == "Weapon") {
+            // Read weapon data
+            std::getline(stream, itemName, ',');
+            stream >> price;
+            stream.ignore(1); // Ignore the comma
+            std::getline(stream, weaponType, ',');
+            stream >> attack;
+            stream.ignore(1); // Ignore the comma
+            stream >> speed;
+
+            Weapon::Type type;
+            if (weaponType == "NONE") type = Weapon::Type::NONE;
+            else if (weaponType == "AXE") type = Weapon::Type::AXE;
+            else if (weaponType == "SWORD") type = Weapon::Type::SWORD;
+            else if (weaponType == "STAFF") type = Weapon::Type::STAFF;
+            else if (weaponType == "BOW") type = Weapon::Type::BOW;
+            else if (weaponType == "POLEARM") type = Weapon::Type::POLEARM;
+
+            Weapon* weapon = new Weapon(itemName, price, type, attack, speed);
+            insertItem(weapon);
+        } 
+        else if (itemType == "Food") {
+            // Read food data
+            std::getline(stream, itemName, ',');
+            stream >> price;
+            stream.ignore(1); // Ignore the comma
+            stream >> health;
+
+            Food* food = new Food(itemName, price, health);
+            insertItem(food);
+        }
+    }
+
+    file.close();
+    std::cout << "Inventory loaded successfully.\n";
 }
 
 int Inventory::input(Character* character) {

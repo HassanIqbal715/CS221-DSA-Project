@@ -22,9 +22,19 @@ int main() {
     int option{-1};
     int characterOption{-1};
 
-    Character* granola = new Character("Granola", 1000, 150, 150, 200);
-    Character* peanut = new Character("Peanut", 600, 400, 50, 250);
-    Character* abdullah = new Character("Fake Abdullah", 2500, 100, 200, 150);
+    // Character* granola = new Character("Granola", 1000, 150, 150, 200);
+    // Character* peanut = new Character("Peanut", 600, 400, 50, 250);
+    // Character* abdullah = new Character("Fake Abdullah", 2500, 100, 200, 150);
+
+    Character* granola = nullptr;
+    Character* peanut = nullptr;
+    Character* abdullah = nullptr;
+
+    vector<Character*> characters = loadCharacterData();
+    granola = characters[0];
+    peanut = characters[1];
+    abdullah = characters[2];
+    Inventory::instance()->loadInventory();
 
     while (gameRunner) {
         cout << "\n---------------------------\n";
@@ -57,16 +67,6 @@ int main() {
                 }
 
                 break;
-            
-            case 2:
-                cout << "\n---------------------------\n";
-                Shop::instance()->print();
-                Shop::instance()->printOptions();
-                Shop::instance()->input();
-                break;
-
-            case 3:
-                break;
 
             case 0:
                 gameRunner = false;
@@ -78,7 +78,7 @@ int main() {
         }
     }
 
-    cleanSaveFile();
+    cleanSaveFiles();
     saveCharacterData(granola);
     saveCharacterData(peanut);
     saveCharacterData(abdullah);
@@ -87,5 +87,9 @@ int main() {
     Inventory::release();
     Menu::release();
     Shop::release();
+
+    delete granola;
+    delete peanut;
+    delete abdullah;
     return 0;
 }

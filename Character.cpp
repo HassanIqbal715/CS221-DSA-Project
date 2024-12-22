@@ -22,7 +22,7 @@ Character::Character() {
     }
 }
 
-Character::Character(string name, int health, int attack, int defense, int speed) {
+Character::Character(string name, int health, int attack, int defense, int speed, int level, int exp, int targetExp) {
     this->name = name;
     this->health = health;
     this->maxHealth = health;
@@ -32,12 +32,10 @@ Character::Character(string name, int health, int attack, int defense, int speed
     this->baseDefense = defense;
     this->speed = speed;
     this->baseSpeed = speed;
-    exp = 500;
-    targetExp =  500 ;
-    level = 4;
-
+    this->level = level;
+    this->exp = exp;
+    this->targetExp = targetExp; 
     levelUp();
-
     weapon = nullptr;
     armorSet = new Armor*[4];
     
@@ -282,6 +280,72 @@ void Character::printLevelUpMessage() {
     cout << "Attack: " << attack << endl;
     cout << "Defense: " << defense << endl;
     cout << "Speed: " << speed << endl;
+}
+
+void Character::printEquipment() {
+    cout << "Armor: \n";
+    cout << "\tHelmet: \n";
+    if (armorSet[0] != nullptr) {
+        cout << "\t\tName: " << armorSet[0]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[0]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[0]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tChestplate: \n";
+    if (armorSet[1] != nullptr) {
+        cout << "\t\tName: " << armorSet[1]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[1]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[1]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tLeggings: \n";
+    if (armorSet[2] != nullptr) {
+        cout << "\t\tName: " << armorSet[2]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[2]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[2]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\tBoots: \n";
+    if (armorSet[3] != nullptr) {
+        cout << "\t\tName: " << armorSet[3]->getName() << '\n';
+        cout << "\t\tDefense: " << armorSet[3]->getDefense() << '\n'; 
+        cout << "\t\tPrice: " << armorSet[3]->getPrice() << '\n';
+    }
+    else {
+        cout << "\t\tNone\n";
+    }
+
+    cout << "\nWeapon: \n";
+    if (weapon == nullptr) {
+        cout << "\tNone";
+        return;
+    }
+    cout << "\tName: " << weapon->getName() << '\n';
+    cout << "\tType: ";
+    if (weapon->getType() == Weapon::Type::AXE)
+        cout << "AXE";
+    else if (weapon->getType() == Weapon::Type::BOW)
+        cout << "BOW";
+    else if (weapon->getType() == Weapon::Type::POLEARM)
+        cout << "POLEARM";
+    else if (weapon->getType() == Weapon::Type::STAFF)
+        cout << "STAFF";
+    else if (weapon->getType() == Weapon::Type::SWORD)
+        cout << "SWORD";
+    else
+        cout << "NONE";
+    cout << '\n';
+    cout << "\tAttack: " << weapon->getAttack() << '\n';
+    cout << "\tSpeed: " << weapon->getSpeed() << '\n';
 }
 
 Character::~Character() {

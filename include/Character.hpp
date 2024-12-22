@@ -23,7 +23,7 @@ private:
 
 public:
     Character();
-    Character(string name, int health, int attack, int defense, int speed);
+    Character(string name, int health, int attack, int defense, int speed, int level, int exp, int targetExp);
 
     void setName(string name);
     void setExp(int exp);
@@ -54,7 +54,9 @@ public:
     int takeDamage(int damage);
     void consumeItem(Food &food);
     void gainExp(int exp);
+    
     void printLevelUpMessage();
+    void printEquipment();
 
     ~Character();
 };
