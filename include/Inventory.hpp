@@ -5,6 +5,7 @@
 #include "Functions.hpp"
 #include "LinkedList.hpp"
 #include "Character.hpp"
+#include <typeinfo>
 using namespace std;
 
 class Inventory {
@@ -38,6 +39,7 @@ public:
     void printOptions();
     void printSubOptions();
 
+    void saveInventory();
     int input(Character* character);
     void inputSubOptions(Character* character, Item* item);
 };

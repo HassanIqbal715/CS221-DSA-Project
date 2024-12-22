@@ -40,14 +40,21 @@ public:
     int getHealth();
     int getMaxHealth();
     int getAttack();
+    int getBaseAttack();
     int getDefense();
+    int getBaseDefense();
     int getSpeed();
+    int getBaseSpeed();
     Weapon* getWeapon();
     Armor** getArmor();
 
     bool checkLevelUp();
+    bool checkDead();
     void levelUp();
+    int takeDamage(int damage);
     void consumeItem(Food &food);
+    void gainExp(int exp);
+    void printLevelUpMessage();
 
     ~Character();
 };

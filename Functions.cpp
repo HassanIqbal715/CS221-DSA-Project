@@ -44,3 +44,35 @@ void fixStringCase(string& text) {
         }
     }
 }
+
+void cleanSaveFile() {
+    // removes everything by opening the file normally
+    ofstream saveFile("database/saveFile.txt");
+    saveFile.close();
+}
+
+void saveCharacterData(Character *&character) {
+    // opens the file in append mode
+    ofstream saveFile("database/savefile.txt", ios::app);
+
+    if (saveFile.is_open()) {
+        saveFile << character->getName() << " " 
+                << character->getHealth() << " " 
+                << character->getMaxHealth() << " " 
+                << character->getBaseAttack() << " " 
+                << character->getBaseDefense() << " " 
+                << character->getBaseSpeed() << " ";
+
+        saveFile << (character->getWeapon() ? character->getWeapon()->getName() : "None") << " ";
+
+        for (int i = 0; i < 4; ++i) {
+            saveFile << (character->getArmor()[i] ? character->getArmor()[i]->getName() : "None") << " ";
+        }
+
+        saveFile << "\n";
+        saveFile.close();
+    } 
+    else {
+        cout << "Failed to open the save file.\n";
+    }
+}

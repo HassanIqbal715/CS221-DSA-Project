@@ -150,6 +150,62 @@ void Shop::printOptions() {
     cout << "0. Exit\n";
 }
 
+int Shop::input() {
+    static int option;
+    static int index;
+    static string name;
+    static Item* item;
+
+    cin >> option;
+    switch(option) {
+        case 1:
+            cin >> index;
+            item = getItemByIndex(index);
+            if (userBalance >= item->getPrice()) {
+                cout << "Item purchased successfully.\n";
+                purchase(item);
+                userBalance -= item->getPrice();
+            }
+            else {
+                cout << "Insufficient funds.\n";
+            }
+            break;
+        
+        case 2:
+            cin >> name;
+            item = getItemByName(name);
+            if (userBalance >= item->getPrice()) {
+                cout << "Item purchased successfully.\n";
+                purchase(item);
+                userBalance -= item->getPrice();
+            }
+            else {
+                cout << "Insufficient funds.\n";
+            }
+            break;
+
+        case 3:
+            printUserBalance();
+            break;
+
+        case 4:
+            break;
+        
+        case 0:
+            return 0;
+            break;
+
+        default:
+            cout << "Invalid input.\n";
+            break;
+    }
+    return 1;
+}
+
+void Shop::purchase(Item* item) {
+    Inventory::instance()->insertItem(item);
+}
+
 void Shop::releaseElements() {
     items.release();
 }

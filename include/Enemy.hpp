@@ -38,7 +38,8 @@ public:
     int getDropCoins();
 
     void scaleStats(int level);
-    void takeDamage(int damage);
+    int takeDamage(int damage);
+    bool checkDead();
 
     ~Enemy();
 };

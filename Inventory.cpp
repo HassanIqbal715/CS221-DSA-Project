@@ -3,8 +3,6 @@
 Inventory* Inventory::sInstance = nullptr;
 
 Inventory::Inventory() {
-    Food* apple = new Food("Apple", 50, 20);
-    insertItem(apple);
 }
 
 Inventory::~Inventory() {
@@ -24,7 +22,7 @@ void Inventory::release() {
 }
 
 void Inventory::insertItem(Item *item) {
-    Item* newItem = new Item(*item);
+    Item* newItem = item->clone();
     items.push_back(newItem);
     cout << "Inserting item: " << newItem->getName() << endl;
 }
@@ -309,6 +307,80 @@ void Inventory::printSubOptions() {
     cout << "0. Exit\n";
 }
 
+void Inventory::saveInventory() {
+    std::ofstream file("database/saveInventory.txt", ios::app);
+
+    if (!file.is_open()) {
+        std::cerr << "Error opening file to save inventory." << std::endl;
+        return;
+    }
+
+    items.startIterator();
+
+    for (int i = 0; i < items.getSize(); ++i) {
+        Item* currentItem = items.getIterator()->data;
+
+        if (Armor* armor = dynamic_cast<Armor*>(currentItem)) {
+            file << "Armor " 
+                 << armor->getName() << " "
+                 << armor->getPrice() << " ";
+            if (armor->getType() == Armor::Type::HELMET) {
+                file << "HELMET ";
+            }
+            else if (armor->getType() == Armor::Type::CHESTPLATE) {
+                file << "CHESTPLATE ";
+            }
+            else if (armor->getType() == Armor::Type::LEGGINGS) {
+                file << "LEGGINGS ";
+            }
+            else if (armor->getType() == Armor::Type::BOOTS) {
+                file << "BOOTS ";
+            }
+
+            file << armor->getDefense() << "\n";
+        }
+        // Saving Weapon items
+        else if (Weapon* weapon = dynamic_cast<Weapon*>(currentItem)) {
+            file << "Weapon " 
+                 << weapon->getName() << " "
+                 << weapon->getPrice() << " ";
+            
+            if (weapon->getType() == Weapon::Type::NONE) {
+                file << "NONE ";
+            }
+            else if (weapon->getType() == Weapon::Type::AXE) {
+                file << "AXE ";
+            }
+            else if (weapon->getType() == Weapon::Type::SWORD) {
+                file << "SWORD ";
+            }
+            else if (weapon->getType() == Weapon::Type::STAFF) {
+                file << "STAFF ";
+            }
+            else if (weapon->getType() == Weapon::Type::BOW) {
+                file << "BOW ";
+            }
+            else if (weapon->getType() == Weapon::Type::POLEARM) {
+                file << "POLEARM ";
+            }
+            file << weapon->getAttack() << " ";
+            file << weapon->getSpeed() << "\n";
+        }
+        // Saving Food items
+        else if (Food* food = dynamic_cast<Food*>(currentItem)) {
+            file << "Food " 
+                 << food->getName() << " "
+                 << food->getPrice() << " "
+                 << food->getHealth() << "\n";
+        }
+
+        items.iterateOnce();
+    }
+
+    items.resetIterator();
+    file.close();
+}
+
 int Inventory::input(Character* character) {
     static int option = 0;
     cin >> option;
@@ -320,7 +392,7 @@ int Inventory::input(Character* character) {
             cout << "Enter index: ";
             cin >> index;
 
-            auto* temp = searchItemByIndex(index);
+            Item* temp = searchItemByIndex(index);
 
             cout << "\n";
 
@@ -329,7 +401,7 @@ int Inventory::input(Character* character) {
                 break;
             }
 
-            cout << "Item found.\n";
+            cout << "Item found: " << temp->getName() << "\n";
             cout << "\n------------------------------\n";
 
             printSubOptions();
@@ -389,7 +461,7 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
     switch (option) {
         case 1:
             if (Armor* armor = dynamic_cast<Armor*>(item)) {
-                cout << "Using Armor: " << armor->getName() << endl;
+                cout << "Equipping Armor: " << armor->getName() << endl;
                 if (armor->getType() == Armor::Type::HELMET) {
                     if (character->getArmor()[0] != nullptr) {
                         insertItem(character->getArmor()[0]);
@@ -414,6 +486,7 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                 removeItem(item);
             }
             else if (Weapon* weapon = dynamic_cast<Weapon*>(item)) {
+                cout << "Equipping Weapon: " << weapon->getName() << endl;
                 if (character->getWeapon() != nullptr) {
                     insertItem(character->getWeapon());
                 }
@@ -421,6 +494,7 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                 removeItem(item);
             }
             else if (Food* food = dynamic_cast<Food*>(item)) {
+                cout << "Eating: " << food->getName() << endl;
                 if (character->getHealth() < character->getMaxHealth()) {
                     character->consumeItem(*food);
                     removeItem(item);
@@ -429,7 +503,9 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                     cout << "Your health is already full.\n";
                 }
             }
+
             break;
+
         case 2:
             cout << "\n------------------------------\n";
             if (Armor* armor = dynamic_cast<Armor*>(item)) {
@@ -474,6 +550,7 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                 cout << "Character: " << "\t  \t" << "Inventory Weapon: \n";
                 cout << "----------------------------------------\n";
                 if (character->getWeapon() != nullptr) {
+                    cout << "Bro what.\n";
                     cout << character->getWeapon()->getName() << "\tName\t" << weapon->getName() << '\n';
                     cout << character->getWeapon()->getPrice() << "\tPrice\t" << weapon->getPrice() << '\n';
 
@@ -493,19 +570,19 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                         cout << "Bow" << "\tType\t";
                     }
 
-                    if (character->getWeapon()->getType() == Weapon::Type::AXE) {
+                    if (weapon->getType() == Weapon::Type::AXE) {
                         cout << "Axe\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::SWORD) {
+                    else if (weapon->getType() == Weapon::Type::SWORD) {
                         cout << "Sword\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::POLEARM) {
+                    else if (weapon->getType() == Weapon::Type::POLEARM) {
                         cout << "Polearm\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::STAFF) {
+                    else if (weapon->getType() == Weapon::Type::STAFF) {
                         cout << "Staff\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::BOW) {
+                    else if (weapon->getType() == Weapon::Type::BOW) {
                         cout << "Bow\n";
                     }
                     cout << character->getWeapon()->getAttack() << "\tAttack\t" << weapon->getAttack() << '\n';
@@ -516,24 +593,26 @@ void Inventory::inputSubOptions(Character* character, Item* item) {
                     cout << 0 << "\tPrice\t" << weapon->getPrice() << '\n';
                     cout << "None" << "\tType\t";
 
-                    if (character->getWeapon()->getType() == Weapon::Type::AXE) {
+                    if (weapon->getType() == Weapon::Type::AXE) {
                         cout << "Axe\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::SWORD) {
+                    else if (weapon->getType() == Weapon::Type::SWORD) {
                         cout << "Sword\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::POLEARM) {
+                    else if (weapon->getType() == Weapon::Type::POLEARM) {
                         cout << "Polearm\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::STAFF) {
+                    else if (weapon->getType() == Weapon::Type::STAFF) {
                         cout << "Staff\n";
                     }
-                    else if (character->getWeapon()->getType() == Weapon::Type::BOW) {
+                    else if (weapon->getType() == Weapon::Type::BOW) {
                         cout << "Bow\n";
                     }
 
-                    cout << character->getAttack() << "\tAttack\t" << weapon->getAttack() << '\n'; 
-                    cout << character->getSpeed() << "\tSpeed\t" << weapon->getSpeed() << '\n';
+                    cout << character->getAttack() - character->getBaseAttack() 
+                         << "\tAttack\t" << weapon->getAttack() << '\n'; 
+                    cout << character->getSpeed() - character->getBaseSpeed()
+                         << "\tSpeed\t" << weapon->getSpeed() << '\n';
                 }
             }
             else {

@@ -19,6 +19,7 @@ public:
     string getName();
     int getPrice();
     int getID();
+    virtual Item* clone() = 0;
 };
 
 class Armor : public Item {
@@ -37,6 +38,7 @@ public:
     void setDefense(int defense);
     Type getType();
     int getDefense();
+    Armor* clone();
 };
 
 class Food : public Item {
@@ -49,6 +51,7 @@ public:
     Food(string name, int price, int health);
     void setHealth(int health);
     int getHealth();
+    Food* clone();
 };
 
 class Weapon : public Item {
@@ -70,4 +73,5 @@ public:
     Type getType();
     int getAttack();
     int getSpeed();
+    Weapon* clone();
 };

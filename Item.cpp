@@ -7,7 +7,8 @@ int Item::itemCount = 0;
 Item::Item() {
     name = " ";
     price = -1;
-    ID = ++itemCount;
+    ID = itemCount;
+    itemCount++;
 }
 
 Item::Item(Item& item) {
@@ -16,7 +17,8 @@ Item::Item(Item& item) {
 }
 
 Item::Item(string name, int price) : name(name), price(price) {
-    ID = ++itemCount;
+    ID = itemCount;
+    itemCount++;
 }
 
 Item::~Item() {
@@ -73,12 +75,16 @@ int Armor::getDefense() {
     return defense;
 }
 
+Armor* Armor::clone() {
+    return new Armor(*this);
+}
+
 // Food class
 Food::Food() {
     int health = -1;
 }
 
-Food::Food(Food& food) {
+Food::Food(Food& food) : Item(food) {
     health = food.health;
 }
 
@@ -93,6 +99,10 @@ int Food::getHealth() {
     return health;
 }
 
+Food* Food::clone() {
+    return new Food(*this);
+}
+
 // Weapon class
 Weapon::Weapon() {
     type = SWORD;
@@ -100,7 +110,7 @@ Weapon::Weapon() {
     speed = -1;
 }
 
-Weapon::Weapon(Weapon& weapon) {
+Weapon::Weapon(Weapon& weapon) : Item(weapon) {
     type = weapon.type;
     attack = weapon.attack;
     speed = weapon.speed;
@@ -131,4 +141,8 @@ int Weapon::getAttack() {
 
 int Weapon::getSpeed() {
     return speed;
+}
+
+Weapon* Weapon::clone() {
+    return new Weapon(*this);
 }

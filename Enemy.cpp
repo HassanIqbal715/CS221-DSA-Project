@@ -171,8 +171,16 @@ void Enemy::scaleStats(int level) {
     }
 }
 
-void Enemy::takeDamage(int damage) {
-    health -= damage;
+int Enemy::takeDamage(int damage) {
+    damage = (damage + rand() % 100) - 0.25 * defense;
+    if (damage < 0)
+        damage = 5;
+    health = health - damage;
+    return damage;
+}
+
+bool Enemy::checkDead() {
+    return health <= 0;
 }
 
 Enemy::~Enemy() { }
