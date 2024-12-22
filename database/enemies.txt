@@ -1,24 +1,25 @@
-Orc,400,35,9,80,Steel Axe,20
-Goblin,200,15,12,30,Bronze Sword,10
-Dragon,1000,75,15,200,Dragon Scale Sword,300
-Hydra,900,60,10,150,Hydra Claw,250
-Behemoth,1200,85,8,250,Behemoth Fist,400
-Chimera,700,70,14,120,Chimeric Axe,300
-Kraken,1400,90,5,300,Kraken Tentacle,500
-Bandit,300,20,10,50,Wooden Sword,5
-Skeleton,250,25,11,40,Steel Bow,10
-Zombie,350,30,7,60,Iron Helmet,15
-Vampire,500,40,13,100,Mystic Bow,100
-Giant,900,55,6,200,Giant Axe,300
-Elf Ranger,400,30,15,60,Elven Bow,20
-Dark Knight,700,65,9,120,Rune Sword,250
-Ice Wraith,500,50,10,100,Ice Staff,200
-Fire Spirit,600,70,11,120,Fire Bow,250
-Shadow Beast,900,75,12,200,Titan Fist,500
-Thunder Lord,1000,80,14,250,Thunder Staff,300
-Phoenix,1100,85,20,250,Fire Dragon Scale,300
-Demonic Entity,1400,100,18,300,Demonic Staff,400
-Royal Guard,600,45,8,100,Gold Sword,150
-Frost Giant,900,60,7,200,Frosted Fruit,150
-Soul Reaper,1200,90,6,300,Soul Stone Staff,700
-Hashir Nasty,690,43,50,241,Enchanted Water,188
+Orc,400,35,9,80,Steel Axe,50
+Goblin,200,15,12,30,Bronze Sword,25
+Dragon,1000,75,15,200,Dragon Scale Sword,1000
+Hydra,900,60,10,150,Hydra Claw,800
+Behemoth,1200,85,8,250,Behemoth Fist,1200
+Chimera,700,70,14,120,Chimeric Axe,900
+Kraken,1400,90,5,300,Kraken Tentacle,1500
+Bandit,300,20,10,50,Wooden Sword,20
+Skeleton,250,25,11,40,Steel Bow,50
+Zombie,350,30,7,60,Iron Helmet,100
+Vampire,500,40,13,100,Mystic Bow,300
+Giant,900,55,6,200,Giant Axe,800
+Elf Ranger,400,30,15,60,Elven Bow,75
+Dark Knight,700,65,9,120,Rune Sword,700
+Ice Wraith,500,50,10,100,Ice Staff,500
+Fire Spirit,600,70,11,120,Fire Bow,600
+Shadow Beast,900,75,12,200,Titan Fist,1200
+Thunder Lord,1000,80,14,250,Thunder Staff,1500
+Phoenix,1100,85,20,250,Fire Dragon Scale,1800
+Demonic Entity,1400,100,18,300,Demonic Staff,2000
+Royal Guard,600,45,8,100,Gold Sword,400
+Frost Giant,900,60,7,200,Frosted Fruit,900
+Soul Reaper,1200,90,6,300,Soul Stone Staff,2500
+Hashir Nasty,690,43,50,241,Enchanted Water,1500
+Hassan Iqbal,10000,1550,1000,2410,Iqbal Ka Shaheen,40000

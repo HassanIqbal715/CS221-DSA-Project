@@ -81,7 +81,9 @@ int Enemy::getSpeed() {
 }
 
 Item* Enemy::getDropItem() {
-    return drop;
+    if (rand()%20 == 2)
+        return drop;
+    return nullptr;
 }
 
 int Enemy::getDropCoins() {

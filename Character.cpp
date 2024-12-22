@@ -180,7 +180,7 @@ void Character::levelUp() {
         defense -= baseDefense;
         speed -= baseSpeed;
 
-        targetExp *= 1.5;
+        targetExp *= 1.2;
         if (level <= 5) {
             maxHealth += 100;
             baseAttack += 10;

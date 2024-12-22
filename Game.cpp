@@ -72,11 +72,12 @@ void Game::fight(Character *&character) {
 
                     if (currentEnemy.checkDead()) {
                         cout << currentEnemy.getName() << " is dead! You won!\n";
-                        Inventory::instance()->insertItem(currentEnemy.getDropItem());
+                        auto Item = currentEnemy.getDropItem();
+                        if (Item != nullptr)
+                            Inventory::instance()->insertItem(Item);
                         userBalance += currentEnemy.getDropCoins();
                     
-                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel * 
-                                           character->getLevel());
+                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel);
 
                         cout << "You gained " << currentEnemy.getDropCoins() << " coins!\n";
 
@@ -93,9 +94,12 @@ void Game::fight(Character *&character) {
 
                     if (character->checkDead()) {
                         userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
                         isFighting = false;
                         cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
-                        cout << "You died...";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
                         break;
                     }
                 }
@@ -103,20 +107,24 @@ void Game::fight(Character *&character) {
                     cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
                     if (character->checkDead()) {
                         userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
                         isFighting = false;
                         cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
-                        cout << "You died...";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
                         break;
                     }
 
                     cout << "You deal " << currentEnemy.takeDamage(character->getAttack()) << " damage!\n";
 
                     if (currentEnemy.checkDead()) {
-                        Inventory::instance()->insertItem(currentEnemy.getDropItem());
+                        auto Item = currentEnemy.getDropItem();
+                        if (Item != nullptr)
+                            Inventory::instance()->insertItem(Item);
                         userBalance += currentEnemy.getDropCoins();
                     
-                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel * 
-                                           character->getLevel());
+                        character->gainExp(currentEnemy.getDropCoins() * enemyLevel);
                         
                         cout << "You gained " << currentEnemy.getDropCoins() << " coins!\n";
 
@@ -135,13 +143,16 @@ void Game::fight(Character *&character) {
                 Inventory::instance()->printItems();
                 Inventory::instance()->printOptions();
                 cout << "Enter your option: ";
-                if (Inventory::instance()->input(character) == 0) {
+                if (Inventory::instance()->input(character) != 0) {
                     cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
                     if (character->checkDead()) {
                         userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
                         isFighting = false;
                         cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
                         cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
                         break;
                     }
                 }
@@ -162,9 +173,12 @@ void Game::fight(Character *&character) {
                     cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
                     if (character->checkDead()) {
                         userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
                         isFighting = false;
                         cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
                         cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
                         break;
                     }
                 }

@@ -22,92 +22,116 @@ Armor,Diamond Helmet,500,HELMET,100
 Armor,Diamond Chestplate,1000,CHESTPLATE,250
 Armor,Diamond Leggings,750,LEGGINGS,200
 Armor,Diamond Boots,375,BOOTS,80
-Armor,Titan Armor,1000,CHESTPLATE,150
-Armor,Kraken Armor,900,CHESTPLATE,120
-Armor,Dragon Scale Armor,800,CHESTPLATE,100
-Armor,Hydra Scale Armor,950,CHESTPLATE,140
-Armor,Behemoth Armor,1100,CHESTPLATE,180
-Armor,Chimera Skin,600,CHESTPLATE,90
-Armor,Fire Dragon Scale,800,CHESTPLATE,110
-Armor,Soul Stone Armor,1200,CHESTPLATE,200
+Armor,Titan Helmet,12000,HELMET,400
+Armor,Kraken Helmet,10000,HELMET,350
+Armor,Dragon Scale Helmet,9500,HELMET,300
+Armor,Hydra Scale Helmet,11000,HELMET,400
+Armor,Behemoth Helmet,13000,HELMET,500
+Armor,Chimera Skin Helmet,7000,HELMET,250
+Armor,Fire Dragon Scale Helmet,10000,HELMET,350
+Armor,Soul Stone Helmet,18000,HELMET,600
+Armor,Titan Armor,10000,CHESTPLATE,400
+Armor,Kraken Armor,9000,CHESTPLATE,350
+Armor,Dragon Scale Armor,8000,CHESTPLATE,300
+Armor,Hydra Scale Armor,9500,CHESTPLATE,400
+Armor,Behemoth Armor,11000,CHESTPLATE,500
+Armor,Chimera Skin,6000,CHESTPLATE,250
+Armor,Fire Dragon Scale,8000,CHESTPLATE,300
+Armor,Soul Stone Armor,15000,CHESTPLATE,600
+Armor,Titan Leggings,15000,LEGGINGS,500
+Armor,Kraken Leggings,12000,LEGGINGS,450
+Armor,Dragon Scale Leggings,11000,LEGGINGS,400
+Armor,Hydra Scale Leggings,12500,LEGGINGS,500
+Armor,Behemoth Leggings,14000,LEGGINGS,600
+Armor,Chimera Skin Leggings,8500,LEGGINGS,300
+Armor,Fire Dragon Scale Leggings,12000,LEGGINGS,450
+Armor,Soul Stone Leggings,20000,LEGGINGS,700
+Armor,Titan Boots,12000,BOOTS,400
+Armor,Kraken Boots,10000,BOOTS,350
+Armor,Dragon Scale Boots,9500,BOOTS,300
+Armor,Hydra Scale Boots,11000,BOOTS,400
+Armor,Behemoth Boots,13000,BOOTS,500
+Armor,Chimera Skin Boots,7000,BOOTS,250
+Armor,Fire Dragon Scale Boots,10000,BOOTS,350
+Armor,Soul Stone Boots,18000,BOOTS,600
 
-Weapon,Wooden Sword,150,SWORD,10,15
-Weapon,Steel Sword,250,SWORD,20,25
-Weapon,Bronze Sword,200,SWORD,15,20
-Weapon,Gold Sword,350,SWORD,25,30
-Weapon,Diamond Sword,500,SWORD,40,35
-Weapon,Wooden Axe,120,AXE,15,20
-Weapon,Steel Axe,220,AXE,25,30
-Weapon,Bronze Axe,180,AXE,20,25
-Weapon,Gold Axe,300,AXE,35,40
-Weapon,Diamond Axe,450,AXE,50,45
-Weapon,Wooden Bow,100,BOW,8,12
-Weapon,Steel Bow,180,BOW,18,22
-Weapon,Bronze Bow,150,BOW,12,18
-Weapon,Gold Bow,250,BOW,28,30
-Weapon,Diamond Bow,400,BOW,40,35
-Weapon,Wooden Staff,130,STAFF,15,20
-Weapon,Steel Staff,230,STAFF,25,35
-Weapon,Bronze Staff,190,STAFF,20,28
-Weapon,Gold Staff,320,STAFF,40,45
-Weapon,Diamond Staff,500,STAFF,55,50
-Weapon,Crossbow,350,BOW,40,50
-Weapon,Polearm,250,POLEARM,30,25
-Weapon,Dragon Claw,600,POLEARM,50,40
-Weapon,Thunder Staff,450,STAFF,45,55
-Weapon,Mystic Bow,400,BOW,35,40
-Weapon,Crystal Sword,550,SWORD,45,40
-Weapon,Giant Axe,550,AXE,50,60
-Weapon,Demonic Staff,650,STAFF,70,60
-Weapon,Elven Bow,300,BOW,20,30
-Weapon,Orc Axe,400,AXE,40,45
-Weapon,Rune Sword,600,SWORD,50,55
-Weapon,Ice Staff,300,STAFF,30,40
-Weapon,Fire Bow,500,BOW,25,45
-Weapon,Light Spear,350,POLEARM,30,50
-Weapon,Titan Fist,800,NONE,100,120
-Weapon,Kraken Tentacle,700,SWORD,90,100
-Weapon,Dragon Scale Sword,600,SWORD,75,85
-Weapon,Hydra Claw,750,POLEARM,120,130
-Weapon,Behemoth Fist,900,NONE,110,130
-Weapon,Chimera Horn,500,STAFF,60,80
-Weapon,Fire Claw,700,AXE,100,120
-Weapon,Soul Stone Staff,1000,STAFF,150,200
-Weapon,Chimeric Axe,850,AXE,130,140
 
-Food,Health Potion,50,30
-Food,Speed Potion,90,35
-Food,Large Health Potion,150,70
-Food,Healing Herb,40,10
-Food,Elven Bread,80,20
-Food,Fruit Juice,60,15
-Food,Meat Stew,120,40
-Food,Roasted Rabbit,100,35
-Food,Spicy Fish,150,45
-Food,Sweet Berries,90,25
-Food,Cursed Meat,200,70
-Food,Mushroom Soup,140,50
-Food,Royal Soup,250,100
-Food,Dragon Egg,500,150
-Food,Elixir Of Life,1000,200
-Food,Goblin Stew,80,20
-Food,Ogre Meat,150,50
-Food,Elf Bread,120,30
-Food,Dwarven Ale,100,10
-Food,Crystal Berry,180,60
-Food,Lava Fruit,200,80
-Food,Vampire Blood,300,100
-Food,Golden Apple,500,200
-Food,Wolf Steak,100,40
-Food,Frosted Fruit,160,60
-Food,Enchanted Water,300,120
-Food,Mystic Herb,200,80
-Food,Kraken Tentacle,500,80
-Food,Titan Flesh,600,120
-Food,Hydra Eye,700,150
-Food,Behemoth Meat,800,170
-Food,Chimera Flesh,400,100
-Food,Fire Dragon Egg,800,180
-Food,Soul Potion,1200,250
-Food,Mystic Kraken Sauce,750,180
-Food,Chimeric Stew,700,160
+Weapon,Wooden Sword,500,SWORD,10,15
+Weapon,Steel Sword,1000,SWORD,20,25
+Weapon,Bronze Sword,800,SWORD,15,20
+Weapon,Gold Sword,1500,SWORD,25,30
+Weapon,Diamond Sword,3000,SWORD,40,35
+Weapon,Wooden Axe,400,AXE,15,20
+Weapon,Steel Axe,900,AXE,25,30
+Weapon,Bronze Axe,750,AXE,20,25
+Weapon,Gold Axe,1200,AXE,35,40
+Weapon,Diamond Axe,2500,AXE,50,45
+Weapon,Wooden Bow,350,BOW,8,12
+Weapon,Steel Bow,800,BOW,18,22
+Weapon,Bronze Bow,600,BOW,12,18
+Weapon,Gold Bow,1200,BOW,28,30
+Weapon,Diamond Bow,2000,BOW,40,35
+Weapon,Wooden Staff,400,STAFF,15,20
+Weapon,Steel Staff,1000,STAFF,25,35
+Weapon,Bronze Staff,800,STAFF,20,28
+Weapon,Gold Staff,1500,STAFF,40,45
+Weapon,Diamond Staff,3000,STAFF,55,50
+Weapon,Crossbow,2000,BOW,40,50
+Weapon,Polearm,1500,POLEARM,30,25
+Weapon,Dragon Claw,7500,POLEARM,150,120
+Weapon,Thunder Staff,6000,STAFF,120,140
+Weapon,Mystic Bow,5000,BOW,120,100
+Weapon,Crystal Sword,10000,SWORD,120,100
+Weapon,Giant Axe,9000,AXE,140,150
+Weapon,Demonic Staff,12000,STAFF,180,150
+Weapon,Elven Bow,5000,BOW,75,80
+Weapon,Orc Axe,6000,AXE,90,95
+Weapon,Rune Sword,10000,SWORD,160,170
+Weapon,Ice Staff,4500,STAFF,80,90
+Weapon,Fire Bow,7000,BOW,95,120
+Weapon,Light Spear,6000,POLEARM,90,130
+Weapon,Titan Fist,18000,NONE,250,300
+Weapon,Kraken Tentacle,15000,SWORD,200,220
+Weapon,Dragon Scale Sword,14000,SWORD,220,250
+Weapon,Hydra Claw,20000,POLEARM,300,320
+Weapon,Behemoth Fist,25000,NONE,350,400
+Weapon,Chimera Horn,12000,STAFF,200,240
+Weapon,Fire Claw,15000,AXE,250,300
+Weapon,Soul Stone Staff,40000,STAFF,500,600
+Weapon,Chimeric Axe,25000,AXE,400,450
+Weapon,Iqbal Ka Shaheen,124100,SWORD,1241,1241
+
+Food,Health Potion,1500,3000
+Food,Large Health Potion,2500,5000
+Food,Healing Herb,400,1000
+Food,Elven Bread,80,200
+Food,Fruit Juice,60,150
+Food,Meat Stew,120,400
+Food,Roasted Rabbit,100,350
+Food,Spicy Fish,150,450
+Food,Sweet Berries,90,250
+Food,Cursed Meat,400,700
+Food,Mushroom Soup,140,500
+Food,Royal Soup,4000,8500
+Food,Dragon Egg,500,1500
+Food,Elixir Of Life,1000,2000
+Food,Goblin Stew,80,200
+Food,Ogre Meat,150,500
+Food,Elf Bread,120,300
+Food,Dwarven Ale,100,100
+Food,Crystal Berry,1800,600
+Food,Lava Fruit,2000,800
+Food,Vampire Blood,3000,1000
+Food,Golden Apple,5000,2000
+Food,Wolf Steak,1000,4000
+Food,Frosted Fruit,3000,6000
+Food,Enchanted Water,30000,1000000
+Food,Mystic Herb,200,400
+Food,Titan Flesh,600,850
+Food,Hydra Eye,700,900
+Food,Behemoth Meat,800,500
+Food,Chimera Flesh,400,4000
+Food,Fire Dragon Egg,800,3000
+Food,Soul Potion,8000,10000
+Food,Mystic Kraken Sauce,12500,20000
+Food,Chimeric Stew,10000,16000
