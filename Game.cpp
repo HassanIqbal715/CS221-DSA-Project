@@ -31,6 +31,9 @@ void Game::play(Character *&character) {
 }
 
 void Game::fight(Character *&character) {
+    static int index;
+    static BuffSkill* skill;
+    int counter = 0;
     int enemyIndex = rand() % enemies.getSize();
     int enemyLevel = character->getLevel() - rand() % character->getLevel() + (rand() % character->getLevel()) / 2;
 
@@ -156,11 +159,85 @@ void Game::fight(Character *&character) {
                         break;
                     }
                 }
-
                 break;
             
             case 3:
-                // Add skills stuff here
+                SkillTree::Instance()->printUnlocked();
+                cout << "1. Enter ID to use\n";
+                cout << "0. Exit\n";
+                cout << "Enter your option: ";
+                cin >> index;
+
+                if (index == 1) {
+                    cout << "Enter ID: ";
+                    cin >> index;
+                }
+                else {
+                    break;
+                }
+                // Check if the index exists in the skillMap
+                if (SkillTree::Instance()->skillMap.find(index) != SkillTree::Instance()->skillMap.end()) {
+                    auto temp = SkillTree::Instance()->skillMap[index];
+                    // Check if the skill is unlocked
+                    if (temp->unlocked) {
+                        if (temp->skillType == SkillType::ATTACK) {
+                            // Safely dynamic cast to AttackSkill
+                            AttackSkill* skill = dynamic_cast<AttackSkill*>(temp->skill);
+                            if (skill) {
+                                cout << "You deal " << currentEnemy.takeDamage(skill->getSkillFactor()) << " damage.\n";
+                                if (currentEnemy.checkDead()) {
+                                    auto Item = currentEnemy.getDropItem();
+                                    if (Item != nullptr)
+                                        Inventory::instance()->insertItem(Item);
+                                    userBalance += currentEnemy.getDropCoins();
+                                
+                                    character->gainExp(currentEnemy.getDropCoins() * enemyLevel);
+                                    
+                                    cout << "You gained " << currentEnemy.getDropCoins() << " coins!\n";
+
+                                    if (character->checkLevelUp()) {
+                                        character->levelUp();
+                                        character->printLevelUpMessage();
+                                    }
+
+                                    isFighting = false;
+                                    break;
+                                }        
+                            } 
+                            else {
+                                cout << "Error: Invalid skill type for attack!\n";
+                            }
+                        } 
+                        else if (temp->skillType == SkillType::BUFF) {
+                            // Safely dynamic cast to BuffSkill
+                            BuffSkill* skill = dynamic_cast<BuffSkill*>(temp->skill);
+                            if (skill) {
+                                skill->applySkill(character);
+                            } else {
+                                cout << "Error: Invalid skill type for buff!\n";
+                            }
+                        }
+
+                        cout << "You take " << character->takeDamage(currentEnemy.getAttack()) << " damage!\n";
+                        if (character->checkDead()) {
+                        userBalance -= currentEnemy.getDropCoins();
+                        if (userBalance < 0)
+                            userBalance = 0;
+                        isFighting = false;
+                        cout << "You lost " << currentEnemy.getDropCoins() << " Rs" << "\n";
+                        cout << "You died... GAMEOVER... \n";
+                        character->setHealth(character->getMaxHealth());
+                        break;
+                        }
+                    } 
+                    else {
+                        cout << "Skill is not unlocked.\n";
+                    }
+
+                } 
+                else {
+                    cout << "Invalid skill ID.\n";
+                }
                 break;
 
             case 0:
@@ -188,6 +265,12 @@ void Game::fight(Character *&character) {
                 cout << "Invalid input.\n";
                 break;
         }
+        if (skill != nullptr && counter == 1) {
+            skill->removeSkill(character);
+            skill = nullptr;
+            counter = -1;
+        }
+        counter++;
     }   
 }
 
@@ -227,6 +310,37 @@ void Game::input(Character *&character) {
                 break;
 
             case 3:
+                cout << "1. Print all\n";
+                cout << "2. Print unlocked\n";
+                cout << "Enter your option: ";
+                cin >> option;
+                if (option == 1) {
+                    SkillTree::Instance()->levelOrderTraversal();
+                    cout << "\n-----------------------\n";
+                    cout << "Your Skill Points: " << skillPoints;
+                    cout << "\n1. Unlock Skill (cost 3).\n";
+                    cout << "0. exit.\n";
+                    cout << "Enter your option: ";
+                    cin >> option;
+                    if (option == 1) {
+                        cout << "Enter ID: ";
+                        cin >> option;
+                        if ((SkillTree::Instance()->skillMap[option]->parent == nullptr || 
+                        SkillTree::Instance()->skillMap[option]->parent->unlocked) && skillPoints >= 3) {
+
+                            SkillTree::Instance()->skillMap[option]->unlocked = true;
+                            cout << "Unlocked!!" << endl;
+                            skillPoints -= 3;
+                        }
+                        else {
+                            cout << "Could not unlock skill due either insufficient skillpoints or parent is not unlocked.\n";
+                        }
+                    }
+                }
+                else {
+                    SkillTree::Instance()->printUnlocked();
+                }
+                option = -1;
                 break;
 
             case 4:

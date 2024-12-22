@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Item.hpp"
+#include "GlobalVariables.hpp"
 using namespace std;
 
 class Character {

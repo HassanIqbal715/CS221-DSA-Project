@@ -19,9 +19,6 @@ using namespace std;
 //  cout << "\n---------------------------\n"; use this to divide lines
 
 int main() {
-
-    SkillTree skillTree;
-    skillTree.levelOrderTraversal();
     srand(time(0));
     initGlobalVar();
     int option{-1};

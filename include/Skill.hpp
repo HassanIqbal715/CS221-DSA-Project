@@ -30,13 +30,12 @@ public:
 
     friend class SkillTree;
 
-    ~Skill();
+    virtual ~Skill();
 };
 
 class AttackSkill : public Skill{
 public:
     AttackSkill(int ID, string name, string descrption, int skillFactor);
-    void attack(Enemy& enemy);
 };
 
 class BuffSkill : public Skill{
@@ -54,6 +53,6 @@ public:
     BuffSkill(int ID, string name, string descrption, int skillFactor,
     Buff buffType);
 
-    void applySkill (Character& character);
-
+    void applySkill (Character *&character);
+    void removeSkill(Character *&character);
 };

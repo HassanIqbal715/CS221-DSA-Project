@@ -175,6 +175,7 @@ bool Character::checkDead() {
 void Character::levelUp() {
     while (exp >= targetExp) {
         ++level;
+        ++skillPoints;
         exp -= targetExp;
         attack -= baseAttack;
         defense -= baseDefense;

@@ -25,10 +25,6 @@ int Skill::getSkillFactor(){
 AttackSkill::AttackSkill(int ID, string name, string description, int skillFactor) :
     Skill(ID, name, description, skillFactor){}
 
-void AttackSkill::attack(Enemy& enemy){
-        enemy.setHealth(enemy.getHealth() - skillFactor);
-}
-
 BuffSkill::BuffSkill() {
     ID = -1; 
     name = " ";
@@ -41,19 +37,36 @@ BuffSkill::BuffSkill(int ID, string name, string description, int skillFactor,
     Buff buffType) : Skill(ID, name, description, skillFactor), 
     buffType(buffType){}
 
-void BuffSkill::applySkill (Character& character){
-        switch(buffType){
-            case ATTACK:
-                character.setAttack(character.getAttack()*skillFactor);
-                break;
-            case DEFENSE:
-                character.setDefense(character.getDefense()*skillFactor);
-                break;
-            case HEALTH:
-                character.setHealth(character.getHealth()*skillFactor);
-                break;
-            case SPEED:
-                character.setSpeed(character.getSpeed()*skillFactor);
-                break;
-        }
+void BuffSkill::applySkill (Character *&character){
+    switch(buffType){
+        case ATTACK:
+            character->setAttack(character->getAttack()*skillFactor);
+            break;
+        case DEFENSE:
+            character->setDefense(character->getDefense()*skillFactor);
+            break;
+        case HEALTH:
+            character->setHealth(character->getHealth()*skillFactor);
+            break;
+        case SPEED:
+            character->setSpeed(character->getSpeed()*skillFactor);
+            break;
     }
+}
+
+void BuffSkill::removeSkill (Character *&character) {
+    switch(buffType){
+    case ATTACK:
+        character->setAttack(character->getAttack()/skillFactor);
+        break;
+    case DEFENSE:
+        character->setDefense(character->getDefense()/skillFactor);
+        break;
+    case HEALTH:
+        character->setHealth(character->getHealth()/skillFactor);
+        break;
+    case SPEED:
+        character->setSpeed(character->getSpeed()/skillFactor);
+        break;
+    }   
+}

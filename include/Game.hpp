@@ -4,6 +4,7 @@
 #include "Shop.hpp"
 #include "GlobalVariables.hpp"
 #include "Functions.hpp"
+#include "SkillTree.hpp"
 
 using namespace std;
 
