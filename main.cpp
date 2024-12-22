@@ -18,7 +18,6 @@ using namespace std;
 int main() {
     srand(time(0));
     initGlobalVar();
-    printTitle();
     int option{-1};
     int characterOption{-1};
 
@@ -36,6 +35,8 @@ int main() {
     abdullah = characters[2];
     Inventory::instance()->loadInventory();
 
+    printTitle();
+    
     while (gameRunner) {
         cout << "\n---------------------------\n";
         Menu::instance()->print();
